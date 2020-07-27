@@ -23,6 +23,7 @@ module.exports = (db) => {
   //     });
   // });
 
+  //ADD COOKIES **********************************/////////////////////
   // Create a new user
   router.post('/', (req, res) => {
     const user = req.body;
