@@ -10,8 +10,8 @@ const pool = new Pool({
 
 // Remove properties and users
 
-const properties = require('./json/properties.json');
-const users = require('./json/users.json');
+// const properties = require('./json/properties.json');
+// const users = require('./json/users.json');
 
 /// Users
 
@@ -23,7 +23,7 @@ const users = require('./json/users.json');
 const getUserWithEmail = function(email) {
   return pool.query(`
   SELECT * FROM users
-  WHERE email = $1
+  WHERE email = $1;
   `, [email])
   .then(res => res.rows[0]);
 }

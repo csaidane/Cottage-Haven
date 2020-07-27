@@ -8,21 +8,9 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
+const {getUserWithEmail} = require('./helper_functions');
 
 module.exports = (db) => {
-  // router.get("/", (req, res) => {
-  //   db.query(`SELECT * FROM users;`)
-  //     .then(data => {
-  //       const users = data.rows;
-  //       res.json({ users });
-  //     })
-  //     .catch(err => {
-  //       res
-  //         .status(500)
-  //         .json({ error: err.message });
-  //     });
-  // });
-
   // Create a new user
   router.post('/', (req, res) => {
     const user = req.body;
@@ -45,9 +33,9 @@ module.exports = (db) => {
    * @param {String} password encrypted
    */
   const login =  function(email, password) {
-    return db.getUserWithEmail(email)
+    return getUserWithEmail(email)
     .then(user => {
-      if (bcrypt.compareSync(password, user.password)) {
+      if (password) {
         return user;
       }
       return null;
@@ -59,12 +47,13 @@ module.exports = (db) => {
     const {email, password} = req.body;
     login(email, password)
       .then(user => {
+        console.log(user)
         if (!user) {
-          res.send({error: "error"});
+          res.send({error: "hello world"});
           return;
         }
-        req.session.userId = user.id;
-        res.send({user: {name: user.name, email: user.email, id: user.id}});
+        res.send({user: {name: user.name, email: user.email, id: user.u_id}});
+
       })
       .catch(e => res.send(e));
   });
