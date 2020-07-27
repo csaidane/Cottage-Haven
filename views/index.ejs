@@ -1,17 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
-
+    <title>Cottage Haven</title>
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+    <%- include('partials/_header') %>
+
+    <!-- Hero image -->
+
+    <!-- Search form -->
+    <form action="/properties" method="get" id="search-property-form" class="search-property-form">
+      <div class="search-property-form__field-wrapper">
+        <label for="search-property-form__city">City</label>
+        <input type="text" name="city" placeholder="City" id="search-property-form__city">
+      </div>
+
+      <div class="search-property-form__field-wrapper">
+        <label for="search-property-form__minimum-price-per-night">Minimum Cost</label>
+        <input type="number" name="minimum_price_per_night" placeholder="Minimum Cost" id="search-property-form__minimum-price-per-night">
+        <label for="search-property-form__maximum-price-per-night">Maximum Cost</label>
+        <input type="number" name="maximum_price_per_night" placeholder="Maximum Cost" id="search-property-form__maximum-price-per-night">
+      </div>
+
+      <div class="search-property-form__field-wrapper">
+        <label for="search-property-form__city"># of bedrooms</label>
+        <input type="number" name="bedrooms" placeholder="# of bedrooms" id="search-property-form__bedrooms">
+      </div>
+
+      <div class="search-property-form__field-wrapper">
+        <label for="search-property-form__city"># of washrooms</label>
+        <input type="number" name="bedrooms" placeholder="# of washrooms" id="search-property-form__bedrooms">
+      </div>
+
+      <div class="search-property-form__field-wrapper">
+          <button>Search</button>
+          <a id="search-property-form__cancel" href="#">Cancel</a>
+      </div>
+    </form>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
