@@ -1,21 +1,19 @@
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS properties CASCADE;
 DROP TABLE IF EXISTS admins CASCADE;
+DROP TABLE IF EXISTS properties CASCADE;
 DROP TABLE IF EXISTS messages CASCADE;
 DROP TABLE IF EXISTS favourites CASCADE;
 
-
 CREATE TABLE users (
-  user_id SERIAL PRIMARY KEY NOT NULL,
+  u_id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE admins (
-  admin_id SERIAL PRIMARY KEY NOT NULL REFERENCES users(user_id),
+  admin_id SERIAL PRIMARY KEY NOT NULL REFERENCES users(u_id)
 );
-
 
 CREATE TABLE properties (
   property_id SERIAL PRIMARY KEY NOT NULL,
@@ -35,7 +33,6 @@ CREATE TABLE properties (
   --appartment unit number ? Floor ?
   --retain any information about the neighborhood ?
   --Noise level, Public transport, AC, Balcony, pools, Storage?
-  country VARCHAR(255) NOT NULL,
   street VARCHAR(255) NOT NULL,
   city VARCHAR(255) NOT NULL,
   province VARCHAR(255) NOT NULL,
@@ -43,18 +40,17 @@ CREATE TABLE properties (
   sold BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-
 CREATE TABLE messages (
   id SERIAL PRIMARY KEY NOT NULL,
-  sender_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
-  receiver_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
+  sender_id INTEGER REFERENCES users(u_id) ON DELETE CASCADE,
+  receiver_id INTEGER REFERENCES users(u_id) ON DELETE CASCADE,
   content TEXT,
-  sent_date TIMESTAMP,
+  sent_date TIMESTAMP
 );
 
 CREATE TABLE favourites (
-  PRIMARY KEY (user_id, property_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (property_id) REFERENCES properties(property_id) ON DELETE CASCADE
+  u_id SERIAL REFERENCES users(u_id) ON DELETE CASCADE,
+  property_id SERIAL REFERENCES properties(property_id) ON DELETE CASCADE,
+  PRIMARY KEY (u_id, property_id)
 );
 
