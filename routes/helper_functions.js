@@ -173,3 +173,15 @@ const addProperty = function(property) {
   .catch(res => (console.log(res)));
 }
 exports.addProperty = addProperty;
+
+
+//Messages/////
+
+const getMessages = function(userId) {
+  return pool.query(`
+  SELECT * FROM messages
+  WHERE receiver_id = $1;
+  `, [userId])
+  .then(res => res.rows[0]);
+}
+exports.getMessages = getMessages;
