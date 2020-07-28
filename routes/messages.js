@@ -5,6 +5,10 @@
 const express       = require('express');
 const messagesRoutes  = express.Router();
 const {getMessages} = require('./helper_functions');
+let cookieSession = require('cookie-session');
+router.use(cookieSession({name: 'session',
+  keys: ['key1', 'key2']}));
+
 
 //WHERE IS DATAHELPERS USED IN ANOTHER FILE??? WHAT IS A DATAHELPER - CALLBACK?? WHERE IS IT COMING FROM??
 module.exports = function() {
@@ -19,7 +23,7 @@ module.exports = function() {
 
   //If user clicks on messages in nav, this redirects user to messages page where they can see messages they've received
   messagesRoutes.get("/messages", function(req, res) {
-    const userId = cookie; //grab cookie here with req.cookie or req.session
+    const userId = req.session.user_id;
     return getUserMessages(userId)
     .then((messages => {
       console.log(userId)
@@ -30,7 +34,7 @@ module.exports = function() {
       res.render('messages_index', messages);
 
     })
-    .catch(e => res.send(e))
+    .catch(e => res.send(e)));
 
   });
 
