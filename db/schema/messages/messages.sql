@@ -7,6 +7,5 @@ CREATE TABLE messages (
   receiver_id INTEGER REFERENCES users(u_id) ON DELETE CASCADE,
   content TEXT,
   sent_date TIMESTAMP,
-  read_message BOOLEAN DEFAULT FALSE,
-  new_message BOOLEAN DEFAULT TRUE,
+  read_message BOOLEAN DEFAULT FALSE
 );
