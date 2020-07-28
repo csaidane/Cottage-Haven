@@ -13,6 +13,10 @@ router.use(cookieSession({name: 'session',
   keys: ['key1', 'key2']}));
 const {getUserWithEmail} = require('./helper_functions');
 const {getFavouritesFor} = require('./helper_functions');
+const {addtoFavourites} = require('./helper_functions');
+const {getUserWithId} = require('./helper_functions');
+
+
 
 
 module.exports = (db) => {
@@ -25,12 +29,39 @@ module.exports = (db) => {
         res.send({error: "error"});
         return;
       }
-      req.session.userId = user.u_id;
+      req.session.user_id = user.u_id;
       let templateVars = {user: user};
       res.render("index", templateVars);
     })
     .catch(e => res.send(e));
   });
+
+  // Create a new user
+  router.post('/addFavorite', (req, res) => {
+    const user_id = req.session.user_id;
+    if (!user_id) {
+      res.send({message: "not logged in"});
+      return;
+    }
+    const property = req.body.property;
+    addtoFavourites(user_id,property)
+    .then(property => {
+      if (!property) {
+        res.send({error: "error"});
+        return;
+      }
+    })
+    .then(() =>{
+      getUserWithId(user_id);
+    })
+    .then( user => {
+      let templateVars = {user: {name: user.name, email: user.email, id: u_id}};
+      res.render("favorites", templateVars);
+    })
+    .catch(e => res.send(e));
+  });
+
+
 
   /**
    * Check if a user exists with a given username and password
