@@ -45,6 +45,24 @@ exports.getUserWithId = getUserWithId;
 
 
 /**
+ *
+ * Getting favourites for a user
+ *
+ */
+const getFavouritesFor = function(id) {
+  return pool.query(`
+  SELECT p.property_id,owner_id,title,description,photo_url_1,photo_url_2,photo_url_3,photo_url_4,price,parking_spaces,number_of_bathrooms,number_of_bedrooms,street,city,province,post_code,sold,photo_url_5
+  FROM properties as p
+  JOIN favourites as f ON f.property_id = p.property_id
+  WHERE f.u_id = $1
+  `, [id])
+  .then(res => res.rows[0]);
+}
+exports.getFavouritesFor = getFavouritesFor;
+
+
+
+/**
  * Add a new user to the database.
  * @param {{name: string, password: string, email: string}} user
  * @return {Promise<{}>} A promise to the user.

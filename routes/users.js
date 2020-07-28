@@ -12,7 +12,7 @@ let cookieSession = require('cookie-session');
 router.use(cookieSession({name: 'session',
   keys: ['key1', 'key2']}));
 const {getUserWithEmail} = require('./helper_functions');
-const {getUserWithId} = require('./helper_functions');
+const {getFavouritesFor} = require('./helper_functions');
 
 
 module.exports = (db) => {
@@ -58,7 +58,7 @@ module.exports = (db) => {
           return;
         }
         req.session.user_id = user.u_id;
-        let templateVars = {user: {name: user.name, email: user.email, id: userId}};
+        let templateVars = {user: {name: user.name, email: user.email, id: u_id}};
         res.render("index", templateVars);
       })
       .catch(e => res.send(e));
@@ -70,21 +70,15 @@ module.exports = (db) => {
   });
 
   router.get("/favourites", (req, res) => {
-    const userId = req.session.userId;
-    if (!userId) {
+    const user_id = req.session.user_id;
+    if (!user_id) {
       res.send({message: "not logged in"});
       return;
     }
-    getUserWithId(userId)
-      .then(user => {
-        if (!user) {
-          res.send({error: "no user with that id"});
-          return;
-        } else{
-          res.redirect("/");
-        }
-      })
-      .catch(e => res.send(e));
+    getFavouritesFor(user_id)
+    .then(result => {
+      console.log(result)
+    })
   });
 
 
