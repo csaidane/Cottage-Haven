@@ -37,7 +37,7 @@ exports.getUserWithEmail = getUserWithEmail;
 const getUserWithId = function(id) {
   return pool.query(`
   SELECT * FROM users
-  WHERE id = $1
+  WHERE u_id = $1
   `, [id])
   .then(res => res.rows[0]);
 }
@@ -173,3 +173,15 @@ const addProperty = function(property) {
   .catch(res => (console.log(res)));
 }
 exports.addProperty = addProperty;
+
+
+//Messages/////
+
+const getMessages = function(userId) {
+  return pool.query(`
+  SELECT * FROM messages
+  WHERE receiver_id = $1;
+  `, [userId])
+  .then(res => res.rows[0]);
+}
+exports.getMessages = getMessages;

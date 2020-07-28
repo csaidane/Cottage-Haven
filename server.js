@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
     let user_id = req.session.user_id;
     getUserWithId(user_id)
     .then( user => {
-      let templateVars = {user: {name: user.name, email: user.email, id: u_id}};
+      let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
         res.render("index", templateVars);
     })
   } else{
