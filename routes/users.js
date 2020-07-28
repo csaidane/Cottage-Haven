@@ -57,9 +57,8 @@ module.exports = (db) => {
         }
         req.session.user_id = user.u_id;
         res.redirect("/");
-        //res.render("urls_show", templateVars);
-        //let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: user};
-        //res.send({user: {name: user.name, email: user.email, id: userId}});
+        let templateVars = {user: {name: user.name, email: user.email, id: userId}};
+        res.render("index", templateVars);
       })
       .catch(e => res.send(e));
   });
