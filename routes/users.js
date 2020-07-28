@@ -18,16 +18,16 @@ const {getFavouritesFor} = require('./helper_functions');
 module.exports = (db) => {
   // Create a new user
   router.post('/register', (req, res) => {
-    const user = req.body;
-    user.password = bcrypt.hashSync(user.password, 12);
-    db.addUser(user)
+    const user = {name: req.body.name , email: req.body.email, password: req.body.password };
+    addUser(user)
     .then(user => {
       if (!user) {
         res.send({error: "error"});
         return;
       }
       req.session.userId = user.u_id;
-      res.send("🤗");
+      let templateVars = {user: user};
+      res.render("index", templateVars);
     })
     .catch(e => res.send(e));
   });
