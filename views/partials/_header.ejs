@@ -14,7 +14,7 @@
           <a class="nav-item nav-link" href="/#">My Listings</a>
           <a class="nav-item nav-link" href="/messages">Messages</a>
           <span>Hello: <%= user.name %></span>
-          <form action="/logout" method="POST">
+          <form action="/api/users/logout" method="POST">
             <button class="nav-item nav-link btn btn-primary">logout</button>
         </form>
         <% } %>

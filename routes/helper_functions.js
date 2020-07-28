@@ -78,6 +78,24 @@ const addUser =  function(user) {
 }
 exports.addUser = addUser;
 
+
+
+/**
+ *
+ * Add a property as a favourite for a specific user
+ *
+ */
+const addtoFavourites =  function(u_id, property_id) {
+  return pool.query(`
+  INSERT INTO favourites (
+    u_id, property_id
+  ) VALUES ($1, $2)
+  RETURNING *
+  `, [u_id, property_id])
+  .then(res => res.rows[0]);
+}
+exports.addtoFavourites = addtoFavourites;
+
 /// Properties
 
 /**
@@ -162,7 +180,6 @@ const addProperty = function(property) {
   number_of_bedrooms,
   country,
   street,
-  city,
   province,
   post_code,
   active
