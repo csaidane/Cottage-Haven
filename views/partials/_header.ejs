@@ -7,11 +7,12 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/#">Create Listing</a>
-        <a class="nav-item nav-link" href="/#">My Listings</a>
         <% if(!user) { %>
           <a class="nav-item nav-link btn btn-primary" href="/login">Login</a>
           <a class="nav-item nav-link btn btn-primary" href="/register">Register</a>
         <%} else { %>
+          <a class="nav-item nav-link" href="/#">My Listings</a>
+          <a class="nav-item nav-link" href="/messages">Messages</a>
           <span>Hello: <%= user.name %></span>
           <form action="/logout" method="POST">
             <button class="nav-item nav-link btn btn-primary">logout</button>
