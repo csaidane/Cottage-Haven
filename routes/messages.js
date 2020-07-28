@@ -5,6 +5,8 @@
 const express       = require('express');
 const messagesRoutes  = express.Router();
 const {getMessages} = require('./helper_functions');
+const {sendMessage} = require('./helper_functions');
+const {getAllUsers} = require('./helper_functions');
 let cookieSession = require('cookie-session');
 router.use(cookieSession({name: 'session',
   keys: ['key1', 'key2']}));
