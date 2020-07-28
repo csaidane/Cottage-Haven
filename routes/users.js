@@ -8,7 +8,10 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
+let cookieSession = require('cookie-session');
 const {getUserWithEmail} = require('./helper_functions');
+const {getUserWithId} = require('./helper_functions');
+
 
 module.exports = (db) => {
   // Create a new user
@@ -49,35 +52,36 @@ module.exports = (db) => {
       .then(user => {
         console.log(user)
         if (!user) {
-          res.send({error: "hello world"});
+          res.send({error: "authentification error"});
           return;
         }
-        res.send({user: {name: user.name, email: user.email, id: user.u_id}});
-
+        req.session.user_id = user.u_id;
+        res.redirect("/");
+        let templateVars = {user: {name: user.name, email: user.email, id: userId}};
+        res.render("index", templateVars);
       })
       .catch(e => res.send(e));
   });
 
   router.post('/logout', (req, res) => {
-    req.session.userId = null;
-    res.send({});
+    req.session = null;
+    res.redirect("/");
   });
 
-  router.get("/me", (req, res) => {
+  router.get("/favourites", (req, res) => {
     const userId = req.session.userId;
     if (!userId) {
       res.send({message: "not logged in"});
       return;
     }
-
-    database.getUserWithId(userId)
+    getUserWithId(userId)
       .then(user => {
         if (!user) {
           res.send({error: "no user with that id"});
           return;
+        } else{
+          res.redirect("/");
         }
-
-        res.send({user: {name: user.name, email: user.email, id: userId}});
       })
       .catch(e => res.send(e));
   });
