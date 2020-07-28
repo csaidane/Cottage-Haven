@@ -9,7 +9,10 @@ const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
-
+let cookieSession = require('cookie-session');
+app.use(cookieSession({name: 'session',
+  keys: ['key1', 'key2']}));
+const {getUserWithId} = require('./routes/helper_functions');
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
@@ -52,7 +55,18 @@ app.use("/api/users", usersRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.render("index");
+  if(req.session.user_id){
+    let user_id = req.session.user_id;
+    getUserWithId(user_id)
+    .then( user => {
+      let templateVars = {user: {name: user.name, email: user.email, id: u_id}};
+        res.render("index", templateVars);
+    })
+  } else{
+    let templateVars = {user: null}
+    res.render("index",templateVars);
+  }
+
 });
 
 
