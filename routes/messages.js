@@ -12,7 +12,7 @@ router.use(cookieSession({name: 'session',
   keys: ['key1', 'key2']}));
 
 
-//WHERE IS DATAHELPERS USED IN ANOTHER FILE??? WHAT IS A DATAHELPER - CALLBACK?? WHERE IS IT COMING FROM??
+
 module.exports = function() {
 
   const getUserMessages =  function(userId) {
@@ -23,7 +23,7 @@ module.exports = function() {
   }
   exports.getUserMessages = getUserMessages;
 
-  //If user clicks on messages in nav, this redirects user to messages page where they can see messages they've received. It also pull all users into the compose message form in the "to" drop down menu to select a receiver.
+  //If user clicks on messages in nav, this redirects user to messages page where they can see messages they've received. It also pulls all users into the compose message form in the "to" drop down menu to select a receiver.
   messagesRoutes.get("/messages", function(req, res) {
     const userId = req.session.user_id;
     return getUserMessages(userId)
