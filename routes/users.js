@@ -9,7 +9,7 @@ const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
 let cookieSession = require('cookie-session');
-app.use(cookieSession({name: 'session',
+router.use(cookieSession({name: 'session',
   keys: ['key1', 'key2']}));
 const {getUserWithEmail} = require('./helper_functions');
 const {getUserWithId} = require('./helper_functions');
