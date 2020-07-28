@@ -8,3 +8,5 @@ $(() => {
     }
   });;
 });
+
+//Put jquery here to expand and read received messages (slideToggle jquery function to expand message)
