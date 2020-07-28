@@ -194,6 +194,7 @@ exports.addProperty = addProperty;
 
 //Messages/////
 
+//Retrieves messages from database and displays them for user when user lands on messages page
 const getMessages = function(userId) {
   return pool.query(`
   SELECT * FROM messages
@@ -202,3 +203,27 @@ const getMessages = function(userId) {
   .then(res => res.rows[0]);
 }
 exports.getMessages = getMessages;
+
+//Sends message data on compose form submit to database
+const sendMessage = function(message) {
+  return pool.query(`
+  INSERT INTO messages (
+    sender_id,
+    receiver_id,
+    content
+  ) VALUES ($1, $2, $3)
+  RETURNING *
+  `, [message.sender_id. message.receiver_id, message.content])
+  .then(res => res.rows[0])
+  .catch(res => (console.log(res)));
+}
+exports.sendMessage = sendMessage;
+
+//Populates "to" field as a receiver drop down menu
+const getAllUsers = function(userId) {
+  return pool.query(`
+  SELECT * FROM users
+  `)
+  .then(res => res.rows[0]);
+}
+exports.getAllUsers = getAllUsers;
