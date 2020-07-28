@@ -56,7 +56,6 @@ module.exports = (db) => {
           return;
         }
         req.session.user_id = user.u_id;
-        res.redirect("/");
         let templateVars = {user: {name: user.name, email: user.email, id: userId}};
         res.render("index", templateVars);
       })
