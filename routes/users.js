@@ -16,9 +16,8 @@ const {getFavouritesFor} = require('./helper_functions');
 const {addtoFavourites} = require('./helper_functions');
 const {getUserWithId} = require('./helper_functions');
 const {addUser} = require('./helper_functions');
-
-
-
+const {getAdminWithId} = require('./helper_functions');
+const {getPropertiesForId} = require('./helper_functions');
 
 
 
@@ -59,7 +58,7 @@ module.exports = (db) => {
     })
     .then( user => {
       let templateVars = {user: {name: user.name, email: user.email, id: u_id}};
-      res.render("favorites", templateVars);
+      res.render("favourites", templateVars);
     })
     .catch(e => res.send(e));
   });
@@ -133,3 +132,28 @@ module.exports = (db) => {
 
   return router;
 };
+
+router.get("/properties", (req,res)=> {
+  if(!req.session.user_id){
+    res.send('error: you are not logged in')
+  } else{
+    let current_id = req.session.user_id;
+    getAdminWithId(current_id)
+    .then(admin => {
+      if (!admin) {
+        res.send({error: "this person is not an admin !"});
+        return;
+      } else{
+        return getPropertiesForId(current_id)
+      }
+    })
+    .then(properties =>{
+      if(!properties){
+        res.send({error: "this admin does not own any property"});
+      }
+      res.send(properties)
+    })
+    .catch(e => res.send(e));
+  }
+
+});
