@@ -37,7 +37,7 @@ exports.getUserWithEmail = getUserWithEmail;
 const getUserWithId = function(id) {
   return pool.query(`
   SELECT * FROM users
-  WHERE id = $1
+  WHERE u_id = $1
   `, [id])
   .then(res => res.rows[0]);
 }

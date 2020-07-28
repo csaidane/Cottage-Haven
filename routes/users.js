@@ -17,7 +17,7 @@ const {getFavouritesFor} = require('./helper_functions');
 
 module.exports = (db) => {
   // Create a new user
-  router.post('/', (req, res) => {
+  router.post('/register', (req, res) => {
     const user = req.body;
     user.password = bcrypt.hashSync(user.password, 12);
     db.addUser(user)
@@ -26,7 +26,7 @@ module.exports = (db) => {
         res.send({error: "error"});
         return;
       }
-      req.session.userId = user.id;
+      req.session.userId = user.u_id;
       res.send("🤗");
     })
     .catch(e => res.send(e));
@@ -52,7 +52,6 @@ module.exports = (db) => {
     const {email, password} = req.body;
     login(email, password)
       .then(user => {
-        console.log(user)
         if (!user) {
           res.send({error: "authentification error"});
           return;
@@ -77,7 +76,7 @@ module.exports = (db) => {
     }
     getFavouritesFor(user_id)
     .then(result => {
-      console.log(result)
+      res.send(result)
     })
   });
 
