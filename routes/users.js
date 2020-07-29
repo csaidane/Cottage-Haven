@@ -124,6 +124,16 @@ module.exports = (db) => {
     res.render("login",templateVars);
   });
 
+  router.get("/register", (req, res) => {
+    let templateVars = {};
+    if(req.session.user_id){
+      templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+    } else{
+      templateVars = {user:null}
+    }
+    res.render("register",templateVars);
+  });
+
 
   router.get("/properties", (req,res)=> {
     let templateVars = {};
