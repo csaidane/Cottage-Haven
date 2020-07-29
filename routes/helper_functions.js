@@ -25,7 +25,7 @@ const getUserWithEmail = function(email) {
   SELECT * FROM users
   WHERE email = $1;
   `, [email])
-  .then(res => res.rows[0]);
+  .then(res => res.rows);
 }
 exports.getUserWithEmail = getUserWithEmail;
 
