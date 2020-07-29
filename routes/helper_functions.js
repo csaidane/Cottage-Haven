@@ -196,6 +196,7 @@ exports.addProperty = addProperty;
 
 //Retrieves messages from database and displays them for user when user lands on messages page
 const getMessages = function(userId) {
+
   return pool.query(`
   SELECT * FROM messages
   WHERE receiver_id = $1;
