@@ -50,15 +50,10 @@ module.exports = (db) => {
     addtoFavourites(user_id,property)
     .then(property => {
       if (!property) {
-        res.send({error: "error"});
+        res.send({error: "error cannot insert into favourites"});
         return;
       }
-    })
-    .then(() =>{
-      getUserWithId(user_id);
-    })
-    .then( user => {
-      let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
+      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
       res.render("favourites", templateVars);
     })
     .catch(e => res.send(e));
@@ -94,8 +89,7 @@ module.exports = (db) => {
         }
         req.session.user_id = user.u_id;
         req.session.user_name = user.name;
-        console.log("USER:", user);
-        let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
+        let templateVars = {user: {name: user.name, id: user.u_id}};
         res.render("index", templateVars);
       })
       .catch(e => res.send(e));
@@ -103,7 +97,7 @@ module.exports = (db) => {
 
   router.post('/logout', (req, res) => {
     req.session = null;
-     let templateVars = {user:null}
+    let templateVars = {user:null}
     res.render("login", templateVars);
   });
 
@@ -123,12 +117,7 @@ module.exports = (db) => {
   router.get("/login", (req, res) => {
     let templateVars = {};
     if(req.session.user_id){
-      let user_id = req.session.user_id;
-      getUserWithId(user_id)
-    .then( user => {
-      templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
-      res.render("favourites", templateVars);
-      })
+      templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
     } else{
       templateVars = {user:null}
     }
@@ -154,13 +143,10 @@ module.exports = (db) => {
       .then((properties) =>{
         if(!properties){
           res.send({error: "this admin does not own any property"});
+          return;
         }
         templateVars['properties'] = properties;
-        return getUserWithId(current_id);
-      })
-      .then( user => {
-        templateVars['user'] ={name: user.name, email: user.email, id: user.u_id};
-        console.log(templateVars);
+        templateVars['user'] ={name: req.session.user_name, id: req.session.user_id};
         res.render('my_listings',templateVars)
       })
       .catch(e => res.send(e));
