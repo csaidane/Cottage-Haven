@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark" style="width:100%">
+  <nav class="navbar fixed-top navbar-expand-md navbar-dark">
     <a class="navbar-brand" href="/">Cottage Haven</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,11 +8,13 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/#">Create Listing</a>
         <% if(!user) { %>
+          <form action="/api/users/logout" method="POST"></form>
           <a class="nav-item nav-link btn btn-primary" href="/api/users/login">Login</a>
           <a class="nav-item nav-link btn btn-primary" href="/api/users/register">Register</a>
+        </form>
         <%} else { %>
-          <a class="nav-item nav-link" href="/#">My Listings</a>
-          <a class="nav-item nav-link" href="/api/users/messages">Messages</a>
+          <a class="nav-item nav-link" href="/api/users/properties">My Listings</a>
+          <a class="nav-item nav-link" href="/api/messages/notes">Messages</a>
           <span>Hello: <%= user.name %></span>
           <form action="/api/users/logout" method="POST">
             <button class="nav-item nav-link btn btn-primary">logout</button>

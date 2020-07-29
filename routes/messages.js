@@ -8,7 +8,7 @@ const {getMessages} = require('./helper_functions');
 const {sendMessage} = require('./helper_functions');
 const {getAllUsers} = require('./helper_functions');
 let cookieSession = require('cookie-session');
-router.use(cookieSession({name: 'session',
+messagesRoutes.use(cookieSession({name: 'session',
   keys: ['key1', 'key2']}));
 
 
@@ -24,7 +24,8 @@ module.exports = function() {
   exports.getUserMessages = getUserMessages;
 
   //If user clicks on messages in nav, this redirects user to messages page where they can see messages they've received. It also pulls all users into the compose message form in the "to" drop down menu to select a receiver.
-  messagesRoutes.get("/messages", function(req, res) {
+  messagesRoutes.get("/notes", function(req, res) {
+    console.log('top')
     const userId = req.session.user_id;
     return getUserMessages(userId)
     .then((messages => {
@@ -36,10 +37,13 @@ module.exports = function() {
       }
       res.render('messages_index', messages);
 
-    })
-    .catch(e => res.send(e)));
+    }))
+    .catch(e => res.send(e));
 
   });
+
+
+
 
   //Allows user to send messages to the database and redirects user to message sent confirmation page
   messagesRoutes.post("/messages", function(req, res) {

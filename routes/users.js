@@ -16,9 +16,8 @@ const {getFavouritesFor} = require('./helper_functions');
 const {addtoFavourites} = require('./helper_functions');
 const {getUserWithId} = require('./helper_functions');
 const {addUser} = require('./helper_functions');
-
-
-
+const {getAdminWithId} = require('./helper_functions');
+const {getPropertiesForId} = require('./helper_functions');
 
 
 
@@ -58,8 +57,8 @@ module.exports = (db) => {
       getUserWithId(user_id);
     })
     .then( user => {
-      let templateVars = {user: {name: user.name, email: user.email, id: u_id}};
-      res.render("favorites", templateVars);
+      let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
+      res.render("favourites", templateVars);
     })
     .catch(e => res.send(e));
   });
@@ -85,7 +84,8 @@ module.exports = (db) => {
   router.post('/login', (req, res) => {
     const {email, password} = req.body;
     login(email, password)
-      .then(user => {
+      .then(users => {
+        const user = users[0]
         if (!user) {
           res.send({error: "authentification error"});
           return;
@@ -130,6 +130,45 @@ module.exports = (db) => {
     }
     res.render("login",templateVars);
   });
+
+
+  router.get("/properties", (req,res)=> {
+    let templateVars = {};
+    if(!req.session.user_id){
+      res.send('error: you are not logged in')
+    } else{
+      let current_id = req.session.user_id;
+      getAdminWithId(current_id)
+      .then(admin => {
+        if (!admin) {
+          res.send({error: "this person is not an admin !"});
+          return;
+        } else{
+          return getPropertiesForId(current_id)
+        }
+      })
+      .then((properties) =>{
+        //ARRAY RETURN ???
+        if(!properties){
+          res.send({error: "this admin does not own any property"});
+        }
+        else{ console.log(properties)
+        }
+        templateVars['properties'] = properties;
+        return getUserWithId(current_id);
+      })
+      .then( user => {
+        templateVars['user'] ={name: user.name, email: user.email, id: user.u_id};
+        console.log(templateVars);
+        res.render('my_listings',templateVars)
+      })
+      .catch(e => res.send(e));
+    }
+  });
+
+
+
+
 
   return router;
 };
