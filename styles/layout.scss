@@ -40,3 +40,31 @@ nav {
 #pic-card:visited {
   color: #000000;
 }
+
+
+
+// Property Profile
+section#property-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+section#property-main {
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+}
+section#property-main img {
+  width: 300px;
+  height: 300px;
+}
+article #property-btn-container {
+  display: flex;
+}
+article#property-desc {
+  margin: 0 auto;
+  max-width: 80vw;
+}
