@@ -168,6 +168,13 @@ module.exports = (db) => {
   router.get("/property-profile", (req, res) => {
     res.render("property_profile");
   });
+  router.get("/create-listing", (req, res) => {
+    res.render("create_listing");
+  });
+  router.get("/faves", (req, res) => {
+    res.render("favourites");
+  });
+  //
 
   return router;
 };

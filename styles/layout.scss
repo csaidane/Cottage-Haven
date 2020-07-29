@@ -8,6 +8,10 @@ body {
   }
 }
 
+main {
+  margin-top: 56px;
+}
+
 nav {
   background-color: #585858;
 }
@@ -43,13 +47,11 @@ nav {
 
 
 
-// Property Profile
+// Property Profile -------------------------------
 section#property-top {
   display: flex;
   justify-content: space-between;
 }
-
-
 section#property-main {
   margin: 0 auto;
   max-width: 60vw;
@@ -73,7 +75,6 @@ article#property-desc {
   padding: 1rem 0;
   max-width: 60vw;
 }
-
 section#thumbs {
   margin: 0 auto;
   display: flex;
@@ -81,9 +82,16 @@ section#thumbs {
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-
 section#thumbs img {
   padding: 1rem;
   width: 150px;
   height: 150px;
+}
+
+
+// Create Listing -------------------------------
+form#create-property-frm {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
 }
