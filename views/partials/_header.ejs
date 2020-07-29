@@ -11,7 +11,7 @@
           <a class="nav-item nav-link btn btn-primary" href="/api/users/login">Login</a>
           <a class="nav-item nav-link btn btn-primary" href="/api/users/register">Register</a>
         <%} else { %>
-          <a class="nav-item nav-link" href="/#">My Listings</a>
+          <a class="nav-item nav-link" href="/api/users/properties">My Listings</a>
           <a class="nav-item nav-link" href="/api/messages/notes">Messages</a>
           <span>Hello: <%= user.name %></span>
           <form action="/api/users/logout" method="POST">
