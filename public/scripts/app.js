@@ -8,6 +8,7 @@ $(() => {
     }
   });;
 
+  //  gathers results from db
   $('#search-property-form').submit((event) => {
     event.preventDefault();
 
