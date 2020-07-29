@@ -148,11 +148,8 @@ module.exports = (db) => {
         }
       })
       .then((properties) =>{
-        //ARRAY RETURN ???
         if(!properties){
           res.send({error: "this admin does not own any property"});
-        }
-        else{ console.log(properties)
         }
         templateVars['properties'] = properties;
         return getUserWithId(current_id);
