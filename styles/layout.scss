@@ -10,10 +10,18 @@ body {
 
 main {
   margin-top: 56px;
+
+  h1, h2, h3 {
+    padding: 1.5rem;
+  }
 }
 
 nav {
   background-color: #585858;
+}
+
+.btn {
+  margin: 0 .3rem;
 }
 
 // add gallery here
@@ -45,6 +53,13 @@ nav {
   color: #000000;
 }
 
+// login and register form styles -----------------
+
+#user-forms {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
 
 
 // Property Profile -------------------------------
