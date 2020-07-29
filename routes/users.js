@@ -32,6 +32,7 @@ module.exports = (db) => {
         return;
       }
       req.session.user_id = user.u_id;
+      req.session.user_name = user.name;
       let templateVars = {user: user};
       res.render("index", templateVars);
     })
@@ -83,6 +84,7 @@ module.exports = (db) => {
 
   router.post('/login', (req, res) => {
     const {email, password} = req.body;
+    console.log("We are here:", email, password);
     login(email, password)
       .then(users => {
         const user = users[0]
@@ -91,6 +93,8 @@ module.exports = (db) => {
           return;
         }
         req.session.user_id = user.u_id;
+        req.session.user_name = user.name;
+        console.log("USER:", user);
         let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
         res.render("index", templateVars);
       })
@@ -100,7 +104,7 @@ module.exports = (db) => {
   router.post('/logout', (req, res) => {
     req.session = null;
      let templateVars = {user:null}
-    res.render("login",templateVars);
+    res.render("login", templateVars);
   });
 
   router.get("/favourites", (req, res) => {
