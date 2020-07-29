@@ -21,6 +21,12 @@
         </div>
       </form>
 
+      <% if (!user) { %>
+
+      <h3>Please login or create an account to view listings!</h3>
+
+       <% } else {%>
+
       <!-- Search form -->
       <form action="properties/search" method="POST" id="search-property-form" class="search-property-form">
         <div class="search-property-form__field-wrapper">
@@ -51,8 +57,7 @@
         </div>
       </form>
 
-
-      <!-- Load images -->
+           <!-- Load images -->
       <div id="gallery-container">
 
         <!-- This will be replaced by code in app.js -->
@@ -96,6 +101,11 @@
           HTML GOES HERE
           `)
     -->
+
+
+      <% } %>
+
+
 
 
 
