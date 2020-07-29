@@ -131,43 +131,44 @@ module.exports = (db) => {
     res.render("login",templateVars);
   });
 
-  return router;
-  /*
+
   router.get("/properties", (req,res)=> {
-    if(!req.session.user_id){
-    res.send('error: you are not logged in')
-  } else{
     let templateVars = {};
-    let current_id = req.session.user_id;
-    getAdminWithId(current_id)
-    .then(admin => {
-      if (!admin) {
-        res.send({error: "this person is not an admin !"});
-        return;
-      } else{
-        return getPropertiesForId(current_id)
-      }
-    })
-    .then((properties) =>{
-      if(!properties){
-        res.send({error: "this admin does not own any property"});
-      }
-      templateVars['properties'] = properties;
-      getUserWithId(current_id);
-    })
-    .then( user => {
-      templateVars['user'] ={name: user.name, email: user.email, id: user.u_id};
-      console.log(templateVars)
-      console.log("OI")
-      res.send(templateVars);
-      //res.render("favourites", templateVars);
-    })
+    if(!req.session.user_id){
+      res.send('error: you are not logged in')
+    } else{
+      let current_id = req.session.user_id;
+      getAdminWithId(current_id)
+      .then(admin => {
+        if (!admin) {
+          res.send({error: "this person is not an admin !"});
+          return;
+        } else{
+          return getPropertiesForId(current_id)
+        }
+      })
+      .then((properties) =>{
+        //ARRAY RETURN ???
+        if(!properties){
+          res.send({error: "this admin does not own any property"});
+        }
+        else{ console.log(properties)
+        }
+        templateVars['properties'] = properties;
+        return getUserWithId(current_id);
+      })
+      .then( user => {
+        templateVars['user'] ={name: user.name, email: user.email, id: user.u_id};
+        console.log(templateVars);
+        res.render('my_listings',templateVars)
+      })
+      .catch(e => res.send(e));
+    }
+  });
 
-    //res.render('my_listings',templateVars)
 
-    .catch(e => res.send(e));
-  }
 
-});*/
 
+
+  return router;
 };
