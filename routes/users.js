@@ -174,6 +174,9 @@ module.exports = (db) => {
   router.get("/faves", (req, res) => {
     res.render("favourites");
   });
+  router.get("/edit-listing", (req, res) => {
+    res.render("edit_listing");
+  });
   //
 
   return router;

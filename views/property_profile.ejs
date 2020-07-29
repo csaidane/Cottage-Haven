@@ -14,10 +14,15 @@
     <main>
       <!-- add code for propery profile. -->
       <section id="property-top">
-        <h3>Property Title</h3>
-        <form class="form-inline" action="api/messages/CREATE?" method="POST">
-          <button type="submit" class="btn btn-primary">Message Owner</button>
-        </form>
+        <h2>Property Title</h2>
+        <div id="fave-msg-owner-btns">
+          <form class="form-inline" action="api/properties/FAVES??" method="POST">
+            <button type="submit" class="btn btn-primary">Add To Faves</button>
+          </form>
+          <form class="form-inline" action="api/messages/CREATE?" method="POST">
+            <button type="submit" class="btn btn-primary">Message Owner</button>
+          </form>
+        </div>
       </section>
 
       <section id="property-main">
