@@ -164,8 +164,10 @@ module.exports = (db) => {
   });
 
 
-
-
+  // placeholder routes for testing markup (to be deleted after testing)
+  router.get("/property-profile", (req, res) => {
+    res.render("property_profile");
+  });
 
   return router;
 };

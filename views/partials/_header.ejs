@@ -6,7 +6,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/#">Create Listing</a>
         <% if(!user) { %>
           <form action="/api/users/logout" method="POST"></form>
           <a class="nav-item nav-link btn btn-primary" href="/api/users/login">Login</a>
@@ -14,6 +13,7 @@
         </form>
         <%} else { %>
           <a class="nav-item nav-link" href="/api/users/properties">My Listings</a>
+          <a class="nav-item nav-link" href="/#">Create Listing</a>
           <a class="nav-item nav-link" href="/api/messages/notes">Messages</a>
           <span>Hello: <%= user.name %></span>
           <form action="/api/users/logout" method="POST">
