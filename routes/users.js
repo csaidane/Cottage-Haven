@@ -57,7 +57,7 @@ module.exports = (db) => {
       getUserWithId(user_id);
     })
     .then( user => {
-      let templateVars = {user: {name: user.name, email: user.email, id: u_id}};
+      let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
       res.render("favourites", templateVars);
     })
     .catch(e => res.send(e));
@@ -84,7 +84,8 @@ module.exports = (db) => {
   router.post('/login', (req, res) => {
     const {email, password} = req.body;
     login(email, password)
-      .then(user => {
+      .then(users => {
+        const user = users[0]
         if (!user) {
           res.send({error: "authentification error"});
           return;
@@ -131,12 +132,12 @@ module.exports = (db) => {
   });
 
   return router;
-};
-
-router.get("/properties", (req,res)=> {
-  if(!req.session.user_id){
+  /*
+  router.get("/properties", (req,res)=> {
+    if(!req.session.user_id){
     res.send('error: you are not logged in')
   } else{
+    let templateVars = {};
     let current_id = req.session.user_id;
     getAdminWithId(current_id)
     .then(admin => {
@@ -147,13 +148,26 @@ router.get("/properties", (req,res)=> {
         return getPropertiesForId(current_id)
       }
     })
-    .then(properties =>{
+    .then((properties) =>{
       if(!properties){
         res.send({error: "this admin does not own any property"});
       }
-      res.send(properties)
+      templateVars['properties'] = properties;
+      getUserWithId(current_id);
     })
+    .then( user => {
+      templateVars['user'] ={name: user.name, email: user.email, id: user.u_id};
+      console.log(templateVars)
+      console.log("OI")
+      res.send(templateVars);
+      //res.render("favourites", templateVars);
+    })
+
+    //res.render('my_listings',templateVars)
+
     .catch(e => res.send(e));
   }
 
-});
+});*/
+
+};
