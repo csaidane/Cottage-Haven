@@ -178,7 +178,6 @@ module.exports = (db) => {
         }
         templateVars['properties'] = properties;
         templateVars['user'] ={name: req.session.user_name, id: req.session.user_id};
-        console.log(templateVars) //  REMOVE <<----
         res.render('my_listings',templateVars)
       })
       .catch(e => res.send(e));
