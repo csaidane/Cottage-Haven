@@ -8,18 +8,6 @@
   <body>
     <%- include('partials/_header') %>
     <main>
-      <!-- Hero image -->
-
-      <!--  test button -->
-      <!-- <form class="form-inline" action="/api/users/register" method="POST">
-        <div class="form-group mb-2">
-          <label for="test">test</label>
-          <input class="form-control" type="text" name="name" placeholder="name" style="width: 300px; margin: 1em">
-          <input class="form-control" type="text" name="email" placeholder="email" style="width: 300px; margin: 1em">
-          <input class="form-control" type="text" name="password" placeholder="password" style="width: 300px; margin: 1em">
-          <button type="submit" class="btn btn-primary">test btn</button>
-        </div>
-      </form> -->
 
       <% if (!user) { %>
 
@@ -42,8 +30,8 @@
           <input type="number" name="maximum_price" placeholder="Max Cost" id="search-property-form__maximum" required>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a id="search-property-form__cancel" href="#">Cancel</a>
+            <button type="submit" class="btn btn-success">Search</button>
+            <!-- <a id="search-property-form__cancel" href="#" >Cancel</a> -->
         </div>
       </div>
       </form>

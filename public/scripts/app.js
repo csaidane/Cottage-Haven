@@ -6,7 +6,7 @@ $(() => {
     for(user of users) {
       $("<div>").text(user.name).appendTo($("body"));
     }
-  });;
+  });
 
   $("#search-property-form__cancel").click(function(){
     $("#search-property-form").trigger("reset");

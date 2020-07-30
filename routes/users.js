@@ -240,7 +240,8 @@ module.exports = (db) => {
           res.send({error: "this person is not an admin !"});
           return;
         } else{
-          let property = {owner_id:req.body.owner_id,
+          console.log(req.body)
+          let property = {owner_id:req.session.user_id,
             title:req.body.title,
             description:req.body.description,
             photo_url_1:req.body.photo_url_1,
@@ -265,8 +266,7 @@ module.exports = (db) => {
           res.send({error: "error: failed to add property"});
           return;
         }
-        let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-        res.render('my_listings',templateVars)
+        res.redirect("/api/users/properties");
       })
       .catch(e => res.send(e));
     }
@@ -279,13 +279,13 @@ module.exports = (db) => {
       res.send({message: "not logged in"});
       return;
     } else{
-      getAdminWithId(current_id)
+      getAdminWithId(user_id)
       .then(admin => {
         if (!admin) {
           res.send({error: "this person is not an admin !"});
           return;
         } else{
-          const property = req.body.property;
+          const property_id = req.body.property;
           return delFromProperties(property_id)
         }
       })
@@ -294,8 +294,7 @@ module.exports = (db) => {
           res.send({error: "error cannot delete"});
           return;
         }
-        let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-        res.render("favourites", templateVars);
+        res.redirect("/api/users/properties");
       })
     }
   });
@@ -307,15 +306,14 @@ module.exports = (db) => {
       res.send({message: "not logged in"});
       return;
     }
-    const property_id = req.body.property;
+    const property_id = req.body.properties;
     SetAsSold(property_id)
     .then(property => {
       if (!property) {
         res.send({error: "error cannot update"});
         return;
       }
-      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-      res.render("favourites", templateVars);
+      res.redirect("/api/users/properties");
     })
   });
 
