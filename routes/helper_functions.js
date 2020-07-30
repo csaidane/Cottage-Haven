@@ -72,9 +72,6 @@ exports.getPropertiesForId = getPropertiesForId;
 
 
 
-
-
-
 /**
  *
  * Getting favourites for a user
@@ -241,24 +238,31 @@ exports.getAllProperties = getAllProperties;
  */
 const addProperty = function(property) {
   return pool.query(`
-  INSERT INTO properties (
-  owner_id,
-  title,
-  description,
-  thumbnail_photo_url,
-  cover_photo_url,
-  cost_per_night,
-  parking_spaces,
-  number_of_bathrooms,
-  number_of_bedrooms,
-  country,
-  street,
-  province,
-  post_code,
-  active
-  ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+  INSERT INTO properties
+   (property_id,
+    owner_id,
+    title,
+    description,
+    photo_url_1,
+    photo_url_2,
+    photo_url_3,
+    photo_url_4,
+    photo_url_5,
+    price,
+    parking_spaces,
+    number_of_bathrooms,
+    number_of_bedrooms,
+    street,
+    city,
+    province,
+    post_code,
+    sold)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
   RETURNING *
-  `, [property.owner_id, property.title, property.description, property.thumbnail_photo_url, property.cover_photo_url, property.cost_per_night, property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms, property.country, property.street, property.city, property.province, property.post_code, true])
+  `, [property.property_id, property.owner_id, property.title, property.description, property.photo_url_1,
+    property.photo_url_2, property.photo_url_3, property.photo_url_4, property.photo_url_5,
+    property.price, property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms, property.street,
+   property.city, property.province, property.post_code, property.sold])
   .then(res => res.rows[0])
   .catch(res => (console.log(res)));
 }

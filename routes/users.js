@@ -20,6 +20,8 @@ const {getPropertiesForId} = require('./helper_functions');
 const {delFromFavourites} = require('./helper_functions');
 const {delFromProperties} = require('./helper_functions');
 const {SetAsSold} = require('./helper_functions');
+const {addProperty} = require('./helper_functions');
+
 
 
 
@@ -184,23 +186,78 @@ module.exports = (db) => {
     }
   });
 
+
+  //Adding property
+  router.post('add/property', (req, res)=>{
+    if(!req.session.user_id){
+      res.send('error: you are not logged in')
+    } else{
+      let current_id = req.session.user_id;
+      getAdminWithId(current_id)
+      .then(admin => {
+        if (!admin) {
+          res.send({error: "this person is not an admin !"});
+          return;
+        } else{
+          let property = {property_id:property_id,
+            owner_id:req.body.owner_id,
+            title:req.body.title,
+            description:req.body.description,
+            photo_url_1:req.body.photo_url_1,
+            photo_url_2:req.body.photo_url_2,
+            photo_url_3:req.body.photo_url_3,
+            photo_url_4:req.body.photo_url_4,
+            photo_url_5:req.body.photo_url_5,
+            price:req.body.price,
+            parking_spaces:req.body.parking_spaces,
+            number_of_bathrooms:req.body.number_of_bathrooms,
+            number_of_bedrooms:req.body.number_of_bedrooms,
+            street:req.body.street,
+            city:req.body.city,
+            province:req.body.province,
+            post_code:req.body.post_code,
+            sold:false};
+          return addProperty(property)
+        }
+      })
+      .then((properties) =>{
+        if(!properties){
+          res.send({error: "error: failed to add property"});
+          return;
+        }
+        let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+        res.render('my_listings',templateVars)
+      })
+      .catch(e => res.send(e));
+    }
+  });
+
   //Deleting a given property
   router.post('/del/property', (req, res) => {
     const user_id = req.session.user_id;
     if (!user_id) {
       res.send({message: "not logged in"});
       return;
+    } else{
+      getAdminWithId(current_id)
+      .then(admin => {
+        if (!admin) {
+          res.send({error: "this person is not an admin !"});
+          return;
+        } else{
+          const property = req.body.property;
+          return delFromProperties(property_id)
+        }
+      })
+      .then(property => {
+        if (!property) {
+          res.send({error: "error cannot delete"});
+          return;
+        }
+        let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+        res.render("favourites", templateVars);
+      })
     }
-    const property = req.body.property;
-    delFromProperties(property_id)
-    .then(property => {
-      if (!property) {
-        res.send({error: "error cannot delete"});
-        return;
-      }
-      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-      res.render("favourites", templateVars);
-    })
   });
 
   //Marks a property as SOLD.
@@ -244,6 +301,8 @@ module.exports = (db) => {
     }
     res.render("property_profile",templateVars);
   });
+
+  //Testing routes
   router.get("/create-listing", (req, res) => {
     res.render("create_listing");
   });
