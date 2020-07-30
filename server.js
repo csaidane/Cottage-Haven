@@ -38,6 +38,10 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const messagesRoutes = require("./routes/messages");
+<<<<<<< HEAD
+=======
+
+>>>>>>> c61224fd2c100d59247cffa432a7b388f2c3c8ba
 // Mount all resource routes
 
 app.use("/api/users", usersRoutes(db));

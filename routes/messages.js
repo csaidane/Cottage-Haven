@@ -27,6 +27,10 @@ module.exports = function() {
 
   //If user clicks on messages in nav, this redirects user to messages page where they can see messages they've received. It also pulls all users into the compose message form in the "to" drop down menu to select a receiver.
   messagesRoutes.get("/notes", function(req, res) {
+<<<<<<< HEAD
+=======
+    console.log('top')
+>>>>>>> c61224fd2c100d59247cffa432a7b388f2c3c8ba
     const userId = req.session.user_id;
     const username = req.session.user_name;
     return getUserMessages(userId)
@@ -40,6 +44,9 @@ module.exports = function() {
     .catch(e => res.send(e));
 
   });
+
+
+
 
   //Allows user to send messages to the database and redirects user to message sent confirmation page
   messagesRoutes.post("/notes", function(req, res) {

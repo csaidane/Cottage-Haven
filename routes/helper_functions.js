@@ -25,7 +25,7 @@ const getUserWithEmail = function(email) {
   SELECT * FROM users
   WHERE email = $1;
   `, [email])
-  .then(res => res.rows[0]);
+  .then(res => res.rows);
 }
 exports.getUserWithEmail = getUserWithEmail;
 
@@ -42,6 +42,37 @@ const getUserWithId = function(id) {
   .then(res => res.rows[0]);
 }
 exports.getUserWithId = getUserWithId;
+
+/**
+ * Get admin with ID
+ */
+
+const getAdminWithId = function(id) {
+  return pool.query(`
+  SELECT * FROM admins
+  WHERE admin_id = $1
+  `, [id])
+  .then(res => res.rows[0]);
+}
+exports.getAdminWithId = getAdminWithId;
+
+
+/**
+ * Get properties for an Admin
+ */
+
+const getPropertiesForId = function(admin_id) {
+  return pool.query(`
+  SELECT * FROM properties
+  WHERE owner_id = $1
+  `, [admin_id])
+  .then(res => res.rows[0]);
+}
+exports.getPropertiesForId = getPropertiesForId;
+
+
+
+
 
 
 /**
