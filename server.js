@@ -43,7 +43,7 @@ const messagesRoutes = require("./routes/messages");
 
 >>>>>>> c61224fd2c100d59247cffa432a7b388f2c3c8ba
 // Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
+
 app.use("/api/users", usersRoutes(db));
 app.use("/api/messages", messagesRoutes(db));
 // Note: mount other resources here, using the same pattern above
