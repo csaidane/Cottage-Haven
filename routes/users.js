@@ -187,8 +187,19 @@ module.exports = (db) => {
   });
 
 
+    //Load the create_listings page
+    router.get("/create_listing", (req, res) => {
+      let templateVars = {};
+      if(req.session.user_id){
+        templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+      } else{
+        templateVars = {user:null}
+      }
+      res.render("create_listing",templateVars);
+    });
+
   //Adding property
-  router.post('add/property', (req, res)=>{
+  router.post('/add/property', (req, res)=>{
     if(!req.session.user_id){
       res.send('error: you are not logged in')
     } else{
