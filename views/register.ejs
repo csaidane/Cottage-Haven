@@ -9,12 +9,18 @@
 
     <%- include('partials/_header') %>
 
-    <main style="margin: 1em;">
+    <main>
       <h3>Create Account</h3>
-      <form class="form-inline" action="api/user/register" method="POST">
-        <div class="form-group mb-2">
-          <label for="email">Email:</label>
-          <input class="form-control" type="email" name="email" placeholder="Email" style="width: 300px; margin: 1em">
+      <form class="form-inline" action="api/users/register" method="POST">
+        <div class="form-group mb-2" id="user-forms">
+          <div>
+            <label for="email">Name:</label>
+            <input class="form-control" type="text" name="name" placeholder="Name" style="width: 300px; margin: 1em">
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input class="form-control" type="email" name="email" placeholder="Email" style="width: 300px; margin: 1em">
+          </div>
           <label for="email">Password:</label>
           <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px; margin: 1em">
           <button type="submit" class="btn btn-primary">Submit</button>

@@ -14,15 +14,30 @@ router.use(cookieSession({name: 'session',
 const {getUserWithEmail} = require('./helper_functions');
 const {getFavouritesFor} = require('./helper_functions');
 const {addtoFavourites} = require('./helper_functions');
-const {getUserWithId} = require('./helper_functions');
 const {addUser} = require('./helper_functions');
 const {getAdminWithId} = require('./helper_functions');
 const {getPropertiesForId} = require('./helper_functions');
+const {delFromFavourites} = require('./helper_functions');
+const {delFromProperties} = require('./helper_functions');
+const {SetAsSold} = require('./helper_functions');
+
 
 
 
 module.exports = (db) => {
-  // Create a new user
+
+  //Load the register page
+  router.get("/register", (req, res) => {
+    let templateVars = {};
+    if(req.session.user_id){
+      templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+    } else{
+      templateVars = {user:null}
+    }
+    res.render("register",templateVars);
+  });
+
+  // Register a new user
   router.post('/register', (req, res) => {
     const user = {name: req.body.name , email: req.body.email, password: req.body.password };
     addUser(user)
@@ -39,38 +54,18 @@ module.exports = (db) => {
     .catch(e => res.send(e));
   });
 
-  // Create a new user
-  router.post('/addFavorite', (req, res) => {
-    const user_id = req.session.user_id;
-    if (!user_id) {
-      res.send({message: "not logged in"});
-      return;
+  //Load the login page
+  router.get("/login", (req, res) => {
+    let templateVars = {};
+    if(req.session.user_id){
+      templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+    } else{
+      templateVars = {user:null}
     }
-    const property = req.body.property;
-    addtoFavourites(user_id,property)
-    .then(property => {
-      if (!property) {
-        res.send({error: "error"});
-        return;
-      }
-    })
-    .then(() =>{
-      getUserWithId(user_id);
-    })
-    .then( user => {
-      let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
-      res.render("favourites", templateVars);
-    })
-    .catch(e => res.send(e));
+    res.render("login",templateVars);
   });
 
-
-
-  /**
-   * Check if a user exists with a given username and password
-   * @param {String} email
-   * @param {String} password encrypted
-   */
+  //Helper function checks if a user exists with a given username and password
   const login =  function(email, password) {
     return getUserWithEmail(email)
     .then(user => {
@@ -82,6 +77,7 @@ module.exports = (db) => {
   }
   exports.login = login;
 
+  //This POST route logs in a user by checking his credentials against the db and cookie-ing the browser
   router.post('/login', (req, res) => {
     const {email, password} = req.body;
     console.log("We are here:", email, password);
@@ -94,19 +90,19 @@ module.exports = (db) => {
         }
         req.session.user_id = user.u_id;
         req.session.user_name = user.name;
-        console.log("USER:", user);
-        let templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
+        let templateVars = {user: {name: user.name, id: user.u_id}};
         res.render("index", templateVars);
       })
       .catch(e => res.send(e));
   });
-
+  //POST for logout, undoes previous cookies
   router.post('/logout', (req, res) => {
     req.session = null;
-     let templateVars = {user:null}
+    let templateVars = {user:null}
     res.render("login", templateVars);
   });
 
+  //Renders a user's favourite properties
   router.get("/favourites", (req, res) => {
     const user_id = req.session.user_id;
     if (!user_id) {
@@ -119,23 +115,47 @@ module.exports = (db) => {
     })
   });
 
-
-  router.get("/login", (req, res) => {
-    let templateVars = {};
-    if(req.session.user_id){
-      let user_id = req.session.user_id;
-      getUserWithId(user_id)
-    .then( user => {
-      templateVars = {user: {name: user.name, email: user.email, id: user.u_id}};
-      res.render("favourites", templateVars);
-      })
-    } else{
-      templateVars = {user:null}
+  //POST for adding a property to the table of favourites (for a specific user)
+  router.post('/add/favourite', (req, res) => {
+    const user_id = req.session.user_id;
+    if (!user_id) {
+      res.send({message: "not logged in"});
+      return;
     }
-    res.render("login",templateVars);
+    const property = req.body.property;
+    addtoFavourites(user_id,property)
+    .then(property => {
+      if (!property) {
+        res.send({error: "error cannot insert into favourites"});
+        return;
+      }
+      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+      res.render("favourites", templateVars);
+    })
+    .catch(e => res.send(e));
   });
 
+  //Undoes previous route
+  router.post('/del/favourite', (req, res) => {
+    const user_id = req.session.user_id;
+    if (!user_id) {
+      res.send({message: "not logged in"});
+      return;
+    }
+    const property = req.body.property;
+    delFromFavourites(user_id,property)
+    .then(property => {
+      if (!property) {
+        res.send({error: "error cannot delete"});
+        return;
+      }
+      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+      res.render("favourites", templateVars);
+    })
+    .catch(e => res.send(e));
+  });
 
+  //Renders all of the properties belonging to a given user, if he owns any
   router.get("/properties", (req,res)=> {
     let templateVars = {};
     if(!req.session.user_id){
@@ -152,25 +172,88 @@ module.exports = (db) => {
         }
       })
       .then((properties) =>{
-        //ARRAY RETURN ???
         if(!properties){
           res.send({error: "this admin does not own any property"});
-        }
-        else{ console.log(properties)
+          return;
         }
         templateVars['properties'] = properties;
-        return getUserWithId(current_id);
-      })
-      .then( user => {
-        templateVars['user'] ={name: user.name, email: user.email, id: user.u_id};
-        console.log(templateVars);
+        templateVars['user'] ={name: req.session.user_name, id: req.session.user_id};
         res.render('my_listings',templateVars)
       })
       .catch(e => res.send(e));
     }
   });
 
+  //Deleting a given property
+  router.post('/del/property', (req, res) => {
+    const user_id = req.session.user_id;
+    if (!user_id) {
+      res.send({message: "not logged in"});
+      return;
+    }
+    const property = req.body.property;
+    delFromProperties(property_id)
+    .then(property => {
+      if (!property) {
+        res.send({error: "error cannot delete"});
+        return;
+      }
+      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+      res.render("favourites", templateVars);
+    })
+  });
 
+  //Marks a property as SOLD.
+  router.post('/sold/property', (req, res) => {
+    const user_id = req.session.user_id;
+    if (!user_id) {
+      res.send({message: "not logged in"});
+      return;
+    }
+    const property_id = req.body.property;
+    SetAsSold(property_id)
+    .then(property => {
+      if (!property) {
+        res.send({error: "error cannot update"});
+        return;
+      }
+      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+      res.render("favourites", templateVars);
+    })
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //Needs fixing
+  router.get("/property-profile", (req, res) => {
+    if(req.session.user_id){
+      templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+    } else{
+      templateVars = {user:null}
+    }
+    res.render("property_profile",templateVars);
+  });
+  router.get("/create-listing", (req, res) => {
+    res.render("create_listing");
+  });
+  router.get("/faves", (req, res) => {
+    res.render("favourites");
+  });
+  router.get("/edit-listing", (req, res) => {
+    res.render("edit_listing");
+  });
+  //
 
 
 
