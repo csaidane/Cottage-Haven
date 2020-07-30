@@ -33,7 +33,7 @@ module.exports = function() {
     .then((messages => {
       getAllUsers(function (allUsers) {
 
-        res.render('messages_index', {messages : messages, user : {name : username, id : userId}, allUsers : allUsers}); //add this in curly braces to every page that has a header or else header will fail - can also add as a templateVars
+        res.render('messages_index', {messages : messages, user : {name : username, id : userId}, to: req.query.to, allUsers : allUsers}); //add this in curly braces to every page that has a header or else header will fail - can also add as a templateVars
       }); //this may need a .then(data) and return data
 
     }))
