@@ -33,14 +33,14 @@
             </li>
           </ul>
           <div id="property-btn-container">
-            <form class="form-inline" action="api/properties/EDIT?" method="POST">
-              <button type="submit" class="btn btn-warning">Edit</button>
-            </form>
-            <form class="form-inline" action="api/properties/SOLD?" method="POST">
-              <button type="submit" class="btn btn-warning">Mark Sold</button>
-            </form>
-            <form class="form-inline" action="api/properties/DELETE?" method="POST">
+            <% if (!properties.sold) {%>
+              <form class="form-inline" action="/api/users/sold/property" method="POST">
+                <button type="submit" class="btn btn-warning">Mark Sold</button>
+              </form>
+            <% } %>
+            <form class="form-inline" action="/api/users/del/property" method="POST">
               <button type="submit" class="btn btn-warning">Delete</button>
+              <!-- <input type="hidden" name="property" value="<%=properties.property_id%>"> -->
             </form>
           </div>
         </article>

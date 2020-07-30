@@ -27,19 +27,19 @@
 
       <section id="property-main">
         <article id="property-left">
-          <h4><%=property.price%></h4>
+          <h4><%=`$${property.price.toFixed(2)}`%></h4>
           <ul>
             <li>Bath: <%=property.number_of_bathrooms%></li>
             <li>Beds: <%=property.number_of_bedrooms%></li>
             <li>Parking: <%=property.parking_spaces%></li>
           </ul>
           <div id="property-btn-container">
-            <form class="form-inline" action="api/properties/EDIT?" method="POST">
+            <!-- <form class="form-inline" action="api/properties/EDIT?" method="POST">
               <button type="submit" class="btn btn-warning">Edit</button>
-            </form>
-            <form class="form-inline" action="api/properties/DELETE?" method="POST">
+            </form> -->
+            <!-- <form class="form-inline" action="api/users/del/property" method="POST">
               <button type="submit" class="btn btn-warning">Delete</button>
-            </form>
+            </form> -->
           </div>
         </article>
 
