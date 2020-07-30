@@ -12,12 +12,15 @@
       <h2>My Faves</h2>
 
       <div id="gallery-container">
-        <% for (let property of favourites) {%> <a href="/api/users/property-profile/<%=property.property_id%>" id="pic-card"> <img src= "https://picsum.photos/200/300"> <p><%=property.title%></p>
+        <% for (let property of favourites) {%>
+          <a href="/api/users/property-profile/<%=property.property_id%>" id="pic-card">
+          <img src= "https://picsum.photos/200/300"> <p><%=property.title%></p>
         <p><%=property.description%></p>
-        </a>
-        <form class="delete-button" method="POST" action="/api/users/del/favourite"><button type="submit">Delete</button>
+        <form class="delete-button" method="POST" action="/api/users/del/favourite"><button class="btn btn-danger" type="submit">Remove</button>
           <input type="hidden" name="property" value="<%=property.property_id%>">
         </form>
+        </a>
+
         <% } %>
       </div>
     </main>

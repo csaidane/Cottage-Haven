@@ -8,8 +8,8 @@
       <% if(!user) { %>
         <div class="navbar-nav mr-auto">
 
-          <a class="nav-item nav-link btn btn-primary" href="/api/users/login">Login</a>
-          <a class="nav-item nav-link btn btn-primary" href="/api/users/register">Register</a>
+          <a class="nav-item nav-link btn btn-success" href="/api/users/login">Login</a>
+          <a class="nav-item nav-link btn btn-success" href="/api/users/register">Register</a>
         </div>
         <%} else { %>
         <div class="navbar-nav mr-auto">
@@ -21,7 +21,7 @@
         <div class="right">
           <span class="userName mr-4 mt-2 text-white">Logged in as: <%= user.name %></span>
           <form class="logoutButton" action="/api/users/logout" method="POST">
-            <button class="nav-item nav-link btn btn-primary">logout</button>
+            <button class="nav-item nav-link btn btn-success">logout</button>
           </form>
         </div>
           <% } %>

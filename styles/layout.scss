@@ -76,6 +76,11 @@ text-align: center;
   flex-direction: column;
 }
 
+#search-property-form {
+  div {
+    padding: .5rem 0;
+  }
+}
 
 // Property Profile -------------------------------
 section#property-top {

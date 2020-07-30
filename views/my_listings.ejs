@@ -14,6 +14,9 @@
     <main>
       <!-- add code for propery profile. -->
       <h2>My Listings</h2>
+
+
+
       <section id="property-main">
         <article id="property-left">
           <h3><%=properties.title%>
@@ -33,14 +36,15 @@
             </li>
           </ul>
           <div id="property-btn-container">
-            <form class="form-inline" action="api/properties/EDIT?" method="POST">
-              <button type="submit" class="btn btn-warning">Edit</button>
-            </form>
-            <form class="form-inline" action="api/properties/SOLD?" method="POST">
-              <button type="submit" class="btn btn-warning">Mark Sold</button>
-            </form>
-            <form class="form-inline" action="api/properties/DELETE?" method="POST">
-              <button type="submit" class="btn btn-warning">Delete</button>
+            <% if (!properties.sold) {%>
+              <form class="form-inline" action="/api/users/sold/property" method="POST">
+                <button type="submit" class="btn btn-warning">Mark Sold</button>
+                <input type="hidden" name="properties" value="<%=properties.property_id%>">
+              </form>
+            <% } %>
+            <form class="form-inline" action="/api/users/del/property" method="POST">
+              <button type="submit" class="btn btn-danger">Delete</button>
+              <input type="hidden" name="property" value="<%=properties.property_id%>">
             </form>
           </div>
         </article>
