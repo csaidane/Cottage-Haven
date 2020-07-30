@@ -28,82 +28,27 @@
        <% } else {%>
 
       <!-- Search form -->
-      <form action="properties/search" method="POST" id="search-property-form" class="search-property-form">
+      <form action="/api/users/gallery" method="POST" id="search-property-form" class="search-property-form">
+
         <div class="search-property-form__field-wrapper">
-          <label for="search-property-form__city">City</label>
-          <input type="text" name="city" placeholder="City" id="search-property-form__city">
+          <label for="search-property-form__minimum-price">Minimum Cost</label>
+          <input type="number" name="minimum_price" placeholder="Minimum Cost" id="search-property-form__minimum-price" required>
+          <label for="search-property-form__maximum-price">Maximum Cost</label>
+          <input type="number" name="maximum_price" placeholder="Maximum Cost" id="search-property-form__maximum" required>
         </div>
 
         <div class="search-property-form__field-wrapper">
-          <label for="search-property-form__minimum-price-per-night">Minimum Cost</label>
-          <input type="number" name="minimum_price_per_night" placeholder="Minimum Cost" id="search-property-form__minimum-price-per-night">
-          <label for="search-property-form__maximum-price-per-night">Maximum Cost</label>
-          <input type="number" name="maximum_price_per_night" placeholder="Maximum Cost" id="search-property-form__maximum-price-per-night">
-        </div>
-
-        <div class="search-property-form__field-wrapper">
-          <label for="search-property-form__city"># of bedrooms</label>
-          <input type="number" name="bedrooms" placeholder="# of bedrooms" id="search-property-form__bedrooms">
-        </div>
-
-        <div class="search-property-form__field-wrapper">
-          <label for="search-property-form__city"># of washrooms</label>
-          <input type="number" name="bedrooms" placeholder="# of washrooms" id="search-property-form__bedrooms">
-        </div>
-
-        <div class="search-property-form__field-wrapper">
-            <button>Search</button>
+            <button type="submit" class="btn btn-primary">Search</button>
             <a id="search-property-form__cancel" href="#">Cancel</a>
         </div>
       </form>
 
-           <!-- Load images -->
-      <div id="gallery-container">
+      <% } %>
 
-        <!-- This will be replaced by code in app.js -->
-
-        <a href="#" id="pic-card">
-          <img src= "https://picsum.photos/200/300">
-          <p>name: name</p>
-          <p>desc: description</p>
-        </a>
-        <a href="#" id="pic-card">
-          <img src= "https://picsum.photos/200/300">
-          <p>name: name</p>
-          <p>desc: description</p>
-        </a>
-        <a href="#" id="pic-card">
-          <img src= "https://picsum.photos/200/300">
-          <p>name: name</p>
-          <p>desc: description</p>
-        </a>
-        <a href="#" id="pic-card">
-          <img src= "https://picsum.photos/200/300">
-          <p>name: name</p>
-          <p>desc: description</p>
-        </a>
-        <a href="#" id="pic-card">
-          <img src= "https://picsum.photos/200/300">
-          <p>name: name</p>
-          <p>desc: description</p>
-        </a>
-
-
-      </div>
     </main>
 
-    <!--
-      POST to get properties.
-
-          jQuery to populate that container.
-          ie: $('dsfsd').append(`
-
-          HTML GOES HERE
-          `)
-    -->
 
 
-      <% } %>
 
 
 

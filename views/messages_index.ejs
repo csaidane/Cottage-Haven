@@ -27,7 +27,7 @@
             <select name="receiver_id">
               <option>Select A Recipient</option>
               <% for (let user of allUsers) { %>
-               <option value="<%=user.u_id%>">
+               <option value="<%=user.u_id%>" <%=user.u_id == to ? 'selected' :  "" %>>
                  <%=user.name%>
                 </option>
              <% } %>

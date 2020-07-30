@@ -11,7 +11,7 @@
     <main>
       <!-- create property form-->
       <h3>Create Listing</h3>
-      <form class="form-inline" id="create-property-frm" action="api/user/create-property" method="POST">
+      <form class="form-inline" id="create-property-frm" action="/api/users/add/property" method="POST">
         <div class="form-group">
           <label for="title">Title</label>
           <input class="form-control" type="text" name="title" placeholder="Property Title" style="width: 200px; margin: 1em">
@@ -21,12 +21,24 @@
           <input class="form-control" type="text" name="desc" placeholder="Description" style="width: 200px; margin: 1em">
         </div>
         <div class="form-group">
-          <label for="thumb">Thumbnail photo</label>
+          <label for="thumb">image URL 1</label>
           <input class="form-control" type="url" name="thumb" placeholder="URL" style="width: 200px; margin: 1em">
         </div>
         <div class="form-group">
-          <label for="cover">Cover photo</label>
-          <input class="form-control" type="url" name="cover" placeholder="URL" style="width: 200px; margin: 1em">
+          <label for="thumb">Image URL 2</label>
+          <input class="form-control" type="url" name="thumb" placeholder="URL" style="width: 200px; margin: 1em">
+        </div>
+        <div class="form-group">
+          <label for="thumb">Image URL 3</label>
+          <input class="form-control" type="url" name="thumb" placeholder="URL" style="width: 200px; margin: 1em">
+        </div>
+        <div class="form-group">
+          <label for="thumb">Image URL 4</label>
+          <input class="form-control" type="url" name="thumb" placeholder="URL" style="width: 200px; margin: 1em">
+        </div>
+        <div class="form-group">
+          <label for="thumb">Image URL 5</label>
+          <input class="form-control" type="url" name="thumb" placeholder="URL" style="width: 200px; margin: 1em">
         </div>
         <div class="form-group">
           <label for="cost-per-night">Cost Per Night</label>

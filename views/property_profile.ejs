@@ -13,25 +13,25 @@
     <main>
       <!-- add code for propery profile. -->
       <section id="property-top">
-        <h2>Property Title</h2>
+        <h2><%=property.title%></h2>
         <div id="fave-msg-owner-btns">
-          <form class="form-inline" action="api/properties/FAVES??" method="POST">
+          <form class="form-inline" action="/api/users/add/favourite" method="POST">
+            <input type="hidden" name="property" value="<%=property.property_id%>">
             <button type="submit" class="btn btn-primary">Add To Faves</button>
           </form>
-          <form class="form-inline" action="api/messages/CREATE?" method="POST">
-            <button type="submit" class="btn btn-primary">Message Owner</button>
-          </form>
+          <a class="btn btn-primary" href="/api/messages/notes?to=<%=property.owner_id%>">
+            Message <%=property.owner%>
+          </a>
         </div>
       </section>
 
       <section id="property-main">
         <article id="property-left">
-          <h4>$452,000.00</h4>
+          <h4><%=property.price%></h4>
           <ul>
-            <li>1 bath</li>
-            <li>2 bedrooms</li>
-            <li>3 parking</li>
-            <li>...</li>
+            <li>Bath: <%=property.number_of_bathrooms%></li>
+            <li>Beds: <%=property.number_of_bedrooms%></li>
+            <li>Parking: <%=property.parking_spaces%></li>
           </ul>
           <div id="property-btn-container">
             <form class="form-inline" action="api/properties/EDIT?" method="POST">
@@ -49,14 +49,14 @@
       </section>
 
       <article id="property-desc">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla temporibus est ratione repudiandae adipisci, alias accusamus officiis natus iure nemo aspernatur nesciunt ea a totam cumque atque inventore corporis iusto.</p>
+        <p><%=property.description%></p>
       </article>
 
       <section id="thumbs">
-        <img src="https://picsum.photos/200/300" alt="property image">
-        <img src="https://picsum.photos/200/300" alt="property image">
-        <img src="https://picsum.photos/200/300" alt="property image">
-        <img src="https://picsum.photos/200/300" alt="property image">
+        <img src=<%=property.photo_url_1%> alt="property image">
+        <img src="<%=property.photo_url_2%>">
+        <img src="<%=property.photo_url_3%>" alt="property image">
+        <img src="<%=property.photo_url_4%>" alt="property image">
 
       </section>
 

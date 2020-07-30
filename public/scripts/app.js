@@ -9,12 +9,12 @@ $(() => {
   });;
 
   //  Fetch
-  $('#search-property-form').submit((event) => {
-    event.preventDefault();
-    // post request to get search results returned.
-    // in the then of the ajax, append results list to the empty content container in index.ejs. (use template literals)
-    console.log('search form submitted')
-  });
+  // $('#search-property-form').submit((event) => {
+  //   event.preventDefault();
+  //   // post request to get search results returned.
+  //   // in the then of the ajax, append results list to the empty content container in index.ejs. (use template literals)
+  //   console.log('search form submitted')
+  // });
 
 
 

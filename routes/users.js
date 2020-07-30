@@ -20,13 +20,20 @@ const {getPropertiesForId} = require('./helper_functions');
 const {delFromFavourites} = require('./helper_functions');
 const {delFromProperties} = require('./helper_functions');
 const {SetAsSold} = require('./helper_functions');
+const {addProperty} = require('./helper_functions');
+const {getAllProperties} = require('./helper_functions');
+const {getPropertyById} = require('./helper_functions');
+
+
+
+
 
 
 
 
 module.exports = (db) => {
-
-  //Load the register page
+  //--Tested,all good--
+  //Load the register page --Tested,all good--
   router.get("/register", (req, res) => {
     let templateVars = {};
     if(req.session.user_id){
@@ -36,7 +43,7 @@ module.exports = (db) => {
     }
     res.render("register",templateVars);
   });
-
+  //--Tested,all good--
   // Register a new user
   router.post('/register', (req, res) => {
     const user = {name: req.body.name , email: req.body.email, password: req.body.password };
@@ -53,7 +60,7 @@ module.exports = (db) => {
     })
     .catch(e => res.send(e));
   });
-
+  //--Tested,all good--
   //Load the login page
   router.get("/login", (req, res) => {
     let templateVars = {};
@@ -76,7 +83,7 @@ module.exports = (db) => {
     });
   }
   exports.login = login;
-
+  //--Tested,all good--
   //This POST route logs in a user by checking his credentials against the db and cookie-ing the browser
   router.post('/login', (req, res) => {
     const {email, password} = req.body;
@@ -102,6 +109,7 @@ module.exports = (db) => {
     res.render("login", templateVars);
   });
 
+  //Good for now
   //Renders a user's favourite properties
   router.get("/favourites", (req, res) => {
     const user_id = req.session.user_id;
@@ -111,10 +119,12 @@ module.exports = (db) => {
     }
     getFavouritesFor(user_id)
     .then(result => {
-      res.send(result)
+      let templateVars = {favourites:result, user: {name: req.session.user_name, id: req.session.user_id}};
+      console.log(templateVars)
+      res.render("favourites", templateVars);
     })
   });
-
+  //Works, all good
   //POST for adding a property to the table of favourites (for a specific user)
   router.post('/add/favourite', (req, res) => {
     const user_id = req.session.user_id;
@@ -129,12 +139,11 @@ module.exports = (db) => {
         res.send({error: "error cannot insert into favourites"});
         return;
       }
-      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-      res.render("favourites", templateVars);
+      res.redirect("/api/users/favourites");
     })
     .catch(e => res.send(e));
   });
-
+  //Works, all good
   //Undoes previous route
   router.post('/del/favourite', (req, res) => {
     const user_id = req.session.user_id;
@@ -149,11 +158,34 @@ module.exports = (db) => {
         res.send({error: "error cannot delete"});
         return;
       }
-      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-      res.render("favourites", templateVars);
+      res.redirect("/api/users/favourites");
     })
     .catch(e => res.send(e));
   });
+
+  router.post('/gallery', (req,res)=>{
+    let templateVars = {};
+    const user_id = req.session.user_id;
+    if (!user_id) {
+      res.send({message: "not logged in"});
+      return;
+    }
+    let min = req.body.minimum_price;
+    let max = req.body.maximum_price;
+    getAllProperties(min,max)
+    .then((properties) =>{
+      if(!properties){
+        res.send("error");
+        return;
+      }
+      templateVars['properties'] = properties;
+      templateVars['user'] ={name: req.session.user_name, id: req.session.user_id};
+      console.log(templateVars)
+      res.render('feed',templateVars)
+    })
+    .catch(e => res.send(e));
+  });
+
 
   //Renders all of the properties belonging to a given user, if he owns any
   router.get("/properties", (req,res)=> {
@@ -184,23 +216,88 @@ module.exports = (db) => {
     }
   });
 
+
+    //Load the create_listings page
+    router.get("/create_listing", (req, res) => {
+      let templateVars = {};
+      if(req.session.user_id){
+        templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+      } else{
+        templateVars = {user:null}
+      }
+      res.render("create_listing",templateVars);
+    });
+
+  //Adding property
+  router.post('/add/property', (req, res)=>{
+    if(!req.session.user_id){
+      res.send('error: you are not logged in')
+    } else{
+      let current_id = req.session.user_id;
+      getAdminWithId(current_id)
+      .then(admin => {
+        if (!admin) {
+          res.send({error: "this person is not an admin !"});
+          return;
+        } else{
+          let property = {owner_id:req.body.owner_id,
+            title:req.body.title,
+            description:req.body.description,
+            photo_url_1:req.body.photo_url_1,
+            photo_url_2:req.body.photo_url_2,
+            photo_url_3:req.body.photo_url_3,
+            photo_url_4:req.body.photo_url_4,
+            photo_url_5:req.body.photo_url_5,
+            price:req.body.price,
+            parking_spaces:req.body.parking_spaces,
+            number_of_bathrooms:req.body.number_of_bathrooms,
+            number_of_bedrooms:req.body.number_of_bedrooms,
+            street:req.body.street,
+            city:req.body.city,
+            province:req.body.province,
+            post_code:req.body.post_code,
+            sold:false};
+          return addProperty(property)
+        }
+      })
+      .then((properties) =>{
+        if(!properties){
+          res.send({error: "error: failed to add property"});
+          return;
+        }
+        let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+        res.render('my_listings',templateVars)
+      })
+      .catch(e => res.send(e));
+    }
+  });
+
   //Deleting a given property
   router.post('/del/property', (req, res) => {
     const user_id = req.session.user_id;
     if (!user_id) {
       res.send({message: "not logged in"});
       return;
+    } else{
+      getAdminWithId(current_id)
+      .then(admin => {
+        if (!admin) {
+          res.send({error: "this person is not an admin !"});
+          return;
+        } else{
+          const property = req.body.property;
+          return delFromProperties(property_id)
+        }
+      })
+      .then(property => {
+        if (!property) {
+          res.send({error: "error cannot delete"});
+          return;
+        }
+        let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
+        res.render("favourites", templateVars);
+      })
     }
-    const property = req.body.property;
-    delFromProperties(property_id)
-    .then(property => {
-      if (!property) {
-        res.send({error: "error cannot delete"});
-        return;
-      }
-      let templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-      res.render("favourites", templateVars);
-    })
   });
 
   //Marks a property as SOLD.
@@ -223,27 +320,21 @@ module.exports = (db) => {
   });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-  //Needs fixing
-  router.get("/property-profile", (req, res) => {
-    if(req.session.user_id){
-      templateVars = {user: {name: req.session.user_name, id: req.session.user_id}};
-    } else{
-      templateVars = {user:null}
-    }
-    res.render("property_profile",templateVars);
+  //GET for returning a specific property information
+  router.get("/property-profile/:id", (req, res) => {
+    let property_id = req.params.id;
+    getPropertyById(property_id)
+    .then((property)=>{
+      if(req.session.user_id){
+        templateVars = {property:property, user: {name: req.session.user_name, id: req.session.user_id}};
+      } else{
+        templateVars = {property:property, user:null}
+      }
+      res.render("property_profile",templateVars);
+    })
   });
+
+  //Testing routes
   router.get("/create-listing", (req, res) => {
     res.render("create_listing");
   });
