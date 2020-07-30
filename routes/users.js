@@ -210,8 +210,7 @@ module.exports = (db) => {
           res.send({error: "this person is not an admin !"});
           return;
         } else{
-          let property = {property_id:property_id,
-            owner_id:req.body.owner_id,
+          let property = {owner_id:req.body.owner_id,
             title:req.body.title,
             description:req.body.description,
             photo_url_1:req.body.photo_url_1,
@@ -289,10 +288,6 @@ module.exports = (db) => {
       res.render("favourites", templateVars);
     })
   });
-
-
-
-
 
 
 

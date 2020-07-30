@@ -239,8 +239,7 @@ exports.getAllProperties = getAllProperties;
 const addProperty = function(property) {
   return pool.query(`
   INSERT INTO properties
-   (property_id,
-    owner_id,
+   (owner_id,
     title,
     description,
     photo_url_1,
@@ -257,9 +256,9 @@ const addProperty = function(property) {
     province,
     post_code,
     sold)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
   RETURNING *
-  `, [property.property_id, property.owner_id, property.title, property.description, property.photo_url_1,
+  `, [property.owner_id, property.title, property.description, property.photo_url_1,
     property.photo_url_2, property.photo_url_3, property.photo_url_4, property.photo_url_5,
     property.price, property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms, property.street,
    property.city, property.province, property.post_code, property.sold])
