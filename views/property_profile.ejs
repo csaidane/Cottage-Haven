@@ -13,7 +13,7 @@
     <main>
       <!-- add code for propery profile. -->
       <section id="property-top">
-        <h2>Property Title</h2>
+        <h2><%=property.title%></h2>
         <div id="fave-msg-owner-btns">
           <form class="form-inline" action="/api/users/add/favourite" method="POST">
             <input type="hidden" name="property" value="<%=property.property_id%>">
@@ -54,9 +54,9 @@
 
       <section id="thumbs">
         <img src=<%=property.photo_url_1%> alt="property image">
-        <img src="https://picsum.photos/200/300" alt="property image">
-        <img src="https://picsum.photos/200/300" alt="property image">
-        <img src="https://picsum.photos/200/300" alt="property image">
+        <img src="<%=property.photo_url_2%>">
+        <img src="<%=property.photo_url_3%>" alt="property image">
+        <img src="<%=property.photo_url_4%>" alt="property image">
 
       </section>
 
