@@ -188,7 +188,7 @@ module.exports = (db) => {
 
 
   //Adding property
-  router.post('add/property', (req, res)=>{
+  router.post('/add/property', (req, res)=>{
     if(!req.session.user_id){
       res.send('error: you are not logged in')
     } else{
