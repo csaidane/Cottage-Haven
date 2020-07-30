@@ -127,6 +127,48 @@ const addtoFavourites =  function(u_id, property_id) {
 }
 exports.addtoFavourites = addtoFavourites;
 
+
+
+const delFromFavourites =  function(u_id, property_id) {
+  return pool.query(`
+  DELETE FROM favourites
+  WHERE u_id = $1 AND property_id = $2
+  RETURNING *
+  `, [u_id, property_id])
+  .then(res => res.rows[0]);
+}
+exports.delFromFavourites = delFromFavourites;
+
+
+
+const delFromProperties =  function(property_id) {
+  return pool.query(`
+  DELETE FROM properties
+  WHERE property_id = $1
+  RETURNING *
+  `, [property_id])
+  .then(res => res.rows[0]);
+}
+exports.delFromProperties = delFromProperties;
+
+
+const SetAsSold =  function(property_id) {
+  return pool.query(`
+  UPDATE properties
+  SET sold = 'true'
+  WHERE property_id = $1
+  RETURNING *
+  `, [property_id])
+  .then(res => res.rows[0]);
+}
+exports.SetAsSold = SetAsSold;
+
+
+
+
+
+
+
 /// Properties
 
 /**
