@@ -15,7 +15,7 @@
 
     <%- include('partials/_header') %>
 
-    <main>
+    <main style="margin-top: 5em;" class="container">
 
 
       <!-- New Message Compisition Form -->
@@ -25,6 +25,7 @@
           <!-- Displays recipient user dropdown menu to select recipient -->
           <div class="dropdown">
             <select name="receiver_id">
+              <option>Select A Recipient</option>
               <% for (let user of allUsers) { %>
                <option value="<%=user.u_id%>" <%=user.u_id == to ? 'selected' :  "" %>>
                  <%=user.name%>
@@ -61,7 +62,7 @@
               <tr>
                 <td><%= message.content%></td>
                 <td><%= allUsers.find(u => u.u_id == message.sender_id).name%></td>
-                <td><%= message.sent_date%></td>
+                <td><%= message.sent_date && message.sent_date.toDateString()%></td>
                 <td><form class="delete-button" method="GET" action="/api/messages/delete_message/<%=message.id%>"><button type="submit">Delete</button></form></td>
               </tr>
               <%}%>
