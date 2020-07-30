@@ -8,11 +8,58 @@
   </head>
 
   <body>
-
     <%- include('partials/_header') %>
 
-    <main style="margin: 1em;">
+    <main>
       <!-- add code for propery profile. -->
+      <section id="property-top">
+        <h2>Property Title</h2>
+        <div id="fave-msg-owner-btns">
+          <form class="form-inline" action="api/properties/FAVES??" method="POST">
+            <button type="submit" class="btn btn-primary">Add To Faves</button>
+          </form>
+          <form class="form-inline" action="api/messages/CREATE?" method="POST">
+            <button type="submit" class="btn btn-primary">Message Owner</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="property-main">
+        <article id="property-left">
+          <h4>$452,000.00</h4>
+          <ul>
+            <li>1 bath</li>
+            <li>2 bedrooms</li>
+            <li>3 parking</li>
+            <li>...</li>
+          </ul>
+          <div id="property-btn-container">
+            <form class="form-inline" action="api/properties/EDIT?" method="POST">
+              <button type="submit" class="btn btn-warning">Edit</button>
+            </form>
+            <form class="form-inline" action="api/properties/DELETE?" method="POST">
+              <button type="submit" class="btn btn-warning">Delete</button>
+            </form>
+          </div>
+        </article>
+
+        <article id="property-right">
+          <img src="https://picsum.photos/200/300" alt="property image">
+        </article>
+      </section>
+
+      <article id="property-desc">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla temporibus est ratione repudiandae adipisci, alias accusamus officiis natus iure nemo aspernatur nesciunt ea a totam cumque atque inventore corporis iusto.</p>
+      </article>
+
+      <section id="thumbs">
+        <img src="https://picsum.photos/200/300" alt="property image">
+        <img src="https://picsum.photos/200/300" alt="property image">
+        <img src="https://picsum.photos/200/300" alt="property image">
+        <img src="https://picsum.photos/200/300" alt="property image">
+
+      </section>
+
     </main>
 
       <!-- Bootstrap JS -->
