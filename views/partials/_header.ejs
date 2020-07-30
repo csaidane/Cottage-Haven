@@ -1,26 +1,30 @@
 <header>
-  <nav class="navbar fixed-top navbar-expand-md navbar-dark">
+  <nav class="navbar fixed-top navbar-expand-md navbar-dark justify-content-between" >
     <a class="navbar-brand" href="/">Cottage Haven</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <% if(!user) { %>
+      <% if(!user) { %>
+        <div class="navbar-nav mr-auto">
 
           <a class="nav-item nav-link btn btn-primary" href="/api/users/login">Login</a>
           <a class="nav-item nav-link btn btn-primary" href="/api/users/register">Register</a>
+        </div>
         <%} else { %>
+        <div class="navbar-nav mr-auto">
           <a class="nav-item nav-link" href="/api/users/properties">My Listings</a>
           <a class="nav-item nav-link" href="/api/users/create_listing">Create Listing</a>
           <a class="nav-item nav-link" href="/api/users/favourites">My Faves</a>
           <a class="nav-item nav-link" href="/api/messages/notes">Messages</a>
-          <span><%= user.name %></span>
-          <form action="/api/users/logout" method="POST">
+        </div>
+        <div class="right">
+          <span class="userName mr-4 mt-2 text-white">Logged in as: <%= user.name %></span>
+          <form class="logoutButton" action="/api/users/logout" method="POST">
             <button class="nav-item nav-link btn btn-primary">logout</button>
-        </form>
-        <% } %>
-      </div>
+          </form>
+        </div>
+          <% } %>
     </div>
 
   </nav>
