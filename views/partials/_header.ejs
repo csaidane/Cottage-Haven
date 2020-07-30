@@ -13,7 +13,7 @@
         <%} else { %>
           <a class="nav-item nav-link" href="/api/users/properties">My Listings</a>
           <a class="nav-item nav-link" href="#">Create Listing</a>
-          <a class="nav-item nav-link" href="#">My Faves</a>
+          <a class="nav-item nav-link" href="/api/users/favourites">My Faves</a>
           <a class="nav-item nav-link" href="/api/messages/notes">Messages</a>
           <span><%= user.name %></span>
           <form action="/api/users/logout" method="POST">

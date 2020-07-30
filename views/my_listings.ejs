@@ -16,12 +16,21 @@
       <h2>My Listings</h2>
       <section id="property-main">
         <article id="property-left">
-          <h4>$452,000.00</h4>
+          <h3><%=properties.title%>
+            <% if(properties.sold) {%>
+              - <span style="color: red">SOLD!</span>
+            <% } else { %>
+              - <span style="color: green">FOR SALE!</span>
+            <% } %>
+          </h3>
+          <h4><%= `$${properties.price.toFixed(2)}` %></h4>
           <ul>
-            <li>1 bath</li>
-            <li>2 bedrooms</li>
-            <li>3 parking</li>
-            <li>...</li>
+            <li><%=`Bathrooms: ${properties.number_of_bathrooms}`%></li>
+            <li><%=`Bedrooms: ${properties.number_of_bedrooms}`%></li>
+            <li><%=`Parking Spaces: ${properties.parking_spaces}`%></li>
+            <li><%=`Address: ${properties.street}`%><br/>
+              <%=`${properties.province}, ${properties.post_code}`%>
+            </li>
           </ul>
           <div id="property-btn-container">
             <form class="form-inline" action="api/properties/EDIT?" method="POST">
@@ -39,34 +48,6 @@
         <article id="property-right">
           <img src="https://picsum.photos/200/300" alt="property image">
         </article>
-      </section>
-      <section id="property-main">
-        <article id="property-left">
-          <h4>$452,000.00</h4>
-          <ul>
-            <li>1 bath</li>
-            <li>2 bedrooms</li>
-            <li>3 parking</li>
-            <li>...</li>
-          </ul>
-          <div id="property-btn-container">
-            <form class="form-inline" action="api/properties/EDIT?" method="POST">
-              <button type="submit" class="btn btn-warning">Edit</button>
-            </form>
-            <form class="form-inline" action="api/properties/SOLD?" method="POST">
-              <button type="submit" class="btn btn-warning">Mark Sold</button>
-            </form>
-            <form class="form-inline" action="api/properties/DELETE?" method="POST">
-              <button type="submit" class="btn btn-warning">Delete</button>
-            </form>
-          </div>
-        </article>
-
-        <article id="property-right">
-          <img src="https://picsum.photos/200/300" alt="property image">
-        </article>
-      </section>
-
 
 
     </main>

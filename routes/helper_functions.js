@@ -278,30 +278,47 @@ const getMessages = function(userId) {
   SELECT * FROM messages
   WHERE receiver_id = $1;
   `, [userId])
-  .then(res => res.rows[0]);
+  .then(res => res.rows);
 }
 exports.getMessages = getMessages;
 
 //Sends message data on compose form submit to database
 const sendMessage = function(message) {
+  console.log("MESSAGE:", message);
+
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   return pool.query(`
   INSERT INTO messages (
     sender_id,
     receiver_id,
-    content
-  ) VALUES ($1, $2, $3)
+    content,
+    sent_date
+  ) VALUES ($1, $2, $3, $4)
   RETURNING *
-  `, [message.sender_id. message.receiver_id, message.content])
+  `, [message.sender_id, message.receiver_id, message.content, date])
   .then(res => res.rows[0])
   .catch(res => (console.log(res)));
 }
 exports.sendMessage = sendMessage;
 
 //Populates "to" field as a receiver drop down menu
-const getAllUsers = function(userId) {
+const getAllUsers = function(callback) {
   return pool.query(`
   SELECT * FROM users
+  ORDER BY name ASC
   `)
-  .then(res => res.rows[0]);
+  .then(res => callback(res.rows));
 }
 exports.getAllUsers = getAllUsers;
+
+//Deletes a message from the actioning user's inbox
+const deleteMessage = function(messageId) {
+
+  return pool.query(`
+  DELETE FROM messages
+  WHERE id = $1;
+  `, [messageId])
+  .then(res => res.rows[0]);
+}
+exports.deleteMessage= deleteMessage;
