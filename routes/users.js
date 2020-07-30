@@ -244,6 +244,16 @@ module.exports = (db) => {
     }
     res.render("property_profile",templateVars);
   });
+  router.get("/create-listing", (req, res) => {
+    res.render("create_listing");
+  });
+  router.get("/faves", (req, res) => {
+    res.render("favourites");
+  });
+  router.get("/edit-listing", (req, res) => {
+    res.render("edit_listing");
+  });
+  //
 
 
 

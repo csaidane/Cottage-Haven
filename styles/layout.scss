@@ -8,8 +8,20 @@ body {
   }
 }
 
+main {
+  margin-top: 56px;
+
+  h1, h2, h3 {
+    padding: 1.5rem;
+  }
+}
+
 nav {
   background-color: #585858;
+}
+
+.btn {
+  margin: 0 .3rem;
 }
 
 // add gallery here
@@ -41,15 +53,24 @@ nav {
   color: #000000;
 }
 
+// login and register form styles -----------------
+
+#user-forms {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
 
 
-// Property Profile
+// Property Profile -------------------------------
 section#property-top {
   display: flex;
   justify-content: space-between;
 }
-
-
+#fave-msg-owner-btns {
+  padding-right: 1rem;
+  display: flex;
+}
 section#property-main {
   margin: 0 auto;
   max-width: 60vw;
@@ -73,7 +94,6 @@ article#property-desc {
   padding: 1rem 0;
   max-width: 60vw;
 }
-
 section#thumbs {
   margin: 0 auto;
   display: flex;
@@ -81,9 +101,30 @@ section#thumbs {
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-
 section#thumbs img {
   padding: 1rem;
   width: 150px;
   height: 150px;
+}
+
+/* lg-smartphone breakpoint. using max width of 600px */
+@media only screen and (max-width: 600px) {
+  section#property-top {
+    flex-direction: column;
+    align-items: center;
+  }
+  #fave-msg-owner-btns {
+    padding-right: 0;
+  }
+  section#property-main img {
+
+    padding: 0 0 1rem 0rem;
+  }
+}
+
+// Create Listing -------------------------------
+form#create-property-frm {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
 }
