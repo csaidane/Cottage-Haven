@@ -9,24 +9,28 @@
     <%- include('partials/_header') %>
     <main>
 
+      <div id="main-img-container">
+
+        <img src="https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
+
       <% if (!user) { %>
 
-      <h3>Please login or create an account to view listings</h3>
+      <h3 class="home_text">Please login or create an account to view listings</h3>
 
        <% } else {%>
 
       <!-- Search form -->
       <h2>Seach Listings</h2>
 
-      <form action="/api/users/gallery" method="POST" class="form-inline" id="search-property-form">
+      <form action="/api/users/gallery" method="POST" class="form-inline home_text" id="search-property-form">
 
         <div class="form-group mb-2" id="user-forms">
           <div>
-          <label for="search-property-form__minimum-price">Minimum Cost</label>
+          <label for="search-property-form__minimum-price" id="search_text">Minimum Cost</label>
           <input type="number" name="minimum_price" placeholder="MinCost" id="search-property-form__minimum-price" required>
         </div>
         <div>
-          <label for="search-property-form__maximum-price">Maximum Cost</label>
+          <label for="search-property-form__maximum-price" id="search_text">Maximum Cost</label>
           <input type="number" name="maximum_price" placeholder="Max Cost" id="search-property-form__maximum" required>
         </div>
         <div>
@@ -37,7 +41,7 @@
       </form>
 
       <% } %>
-
+     </div>
     </main>
 
 
