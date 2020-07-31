@@ -8,11 +8,6 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-// Remove properties and users
-
-// const properties = require('./json/properties.json');
-// const users = require('./json/users.json');
-
 /// Users
 
 /**
