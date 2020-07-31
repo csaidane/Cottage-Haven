@@ -25,7 +25,7 @@ module.exports = function() {
   }
   exports.getUserMessages = getUserMessages;
 
-  //If user clicks on messages in nav, this redirects user to messages page where they can see messages they've received. It also pulls all users into the compose message form in the "to" drop down menu to select a receiver.
+  //If user clicks on messages in nav, this redirects user to messages page where they can see messages they've received. It also pulls all users into the compose message form in the "to" drop down menu to select a recipient.
   messagesRoutes.get("/notes", function(req, res) {
     const userId = req.session.user_id;
     const username = req.session.user_name;
@@ -33,8 +33,9 @@ module.exports = function() {
     .then((messages => {
       getAllUsers(function (allUsers) {
 
-        res.render('messages_index', {messages : messages, user : {name : username, id : userId}, to: req.query.to, allUsers : allUsers}); //add this in curly braces to every page that has a header or else header will fail - can also add as a templateVars
-      }); //this may need a .then(data) and return data
+        //add this in curly braces to every page that has a header or else header will fail - can also add as a templateVars
+        res.render('messages_index', {messages : messages, user : {name : username, id : userId}, to: req.query.to, allUsers : allUsers});
+      });
 
     }))
     .catch(e => res.send(e));
@@ -46,10 +47,10 @@ module.exports = function() {
 
   //Allows user to send messages to the database and redirects user to message sent confirmation page
   messagesRoutes.post("/notes", function(req, res) {
-    //user name (user_id) selected from drop down in compose message form becomes receiver_id - front end
+    //user name (user_id) selected from drop down in compose message form becomes receiver_id via front end
     const userId = req.session.user_id;
     const username = req.session.user_name;
-    const fullMessage = {sender_id : req.session.user_id, content : req.body.content, receiver_id : req.body.receiver_id}; //these .names have to be the same on the front end so that selected username can be converted to receiver_id <select name="receiver_id"><option>NAME</option><select> <--- add to front end
+    const fullMessage = {sender_id : req.session.user_id, content : req.body.content, receiver_id : req.body.receiver_id}; //these .names have to be the same on the front end so that selected username can be converted to receiver_id <select name="receiver_id"><option>NAME</option><select>
     sendMessage(fullMessage)
     .then(message => {
       if (!message) {
