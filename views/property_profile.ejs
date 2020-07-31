@@ -19,9 +19,9 @@
             <input type="hidden" name="property" value="<%=property.property_id%>">
             <button type="submit" class="btn btn-primary">Add To Faves</button>
           </form>
-          <a class="btn btn-primary" href="/api/messages/notes?to=<%=property.owner_id%>">
+          <button id="owner_button"><a id="message-owner" class="btn btn-primary" href="/api/messages/notes?to=<%=property.owner_id%>">
             Message <%=property.owner%>
-          </a>
+          </a></button>
         </div>
       </section>
 
